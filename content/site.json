@@ -47,7 +47,7 @@
   ],
   "integrations": {
     "_note": "Fill these in once the free accounts exist. Leave a value empty to show the 'not connected yet' fallback.",
-    "zeffy_donation_form_url": "",
+    "zeffy_donation_form_url": "https://www.zeffy.com/embed/donation-form/support-delta-shores-community",
     "sender_signup_form_url": "https://stats.sender.net/forms/b68OZL/view",
     "contact_form_action": "",
     "contact_form_fields": {

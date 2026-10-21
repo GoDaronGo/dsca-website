@@ -12,7 +12,8 @@
     <p class="muted">The Delta Shores Community Association is a 501(c)(3) nonprofit.</p>
   </div>
   {% if integ.zeffy_donation_form_url %}
-  <iframe class="embed" src="{{ integ.zeffy_donation_form_url }}" title="Donation form" allowpaymentrequest allow="payment"></iframe>
+  <iframe class="embed" style="min-height:1100px;background:transparent" src="{{ integ.zeffy_donation_form_url }}" title="Donation form" allow="payment" allowtransparency="true"></iframe>
+  <p class="muted">Having trouble with the form? <a href="{{ integ.zeffy_donation_form_url|replace("/embed/", "/en-US/") }}" rel="noopener">Open it on Zeffy</a>.</p>
   {% else %}
   <div class="notice"><p><strong>Preview:</strong> the donation form will appear here once the Zeffy account is connected. To give today, email <a href="mailto:{{ site.email }}?subject=Donation">{{ site.email }}</a>.</p></div>
   {% endif %}
