@@ -20,7 +20,7 @@
 
 {% macro signup(source) %}
 {% if integ.sender_signup_form_url %}
-<iframe class="embed" style="min-height:420px" src="{{ integ.sender_signup_form_url }}" title="Mailing list sign-up"></iframe>
+<iframe class="embed" style="min-height:480px;background:transparent" src="{{ integ.sender_signup_form_url }}" title="Mailing list sign-up"></iframe>
 {% else %}
 <a class="btn" href="/contact?source={{ source }}">Join the mailing list</a>
 {% endif %}
