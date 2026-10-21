@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from "_macros.html" import signup with context %}
+{% set title = post.title %}
+{% set description = post.excerpt|plain(160) %}
+{% set og_image = post.image %}
+{% block main %}
+<article>
+  <div class="wrap page-head">
+    <a class="crumb" href="/blog">News</a>
+    <h1>{{ post.title }}</h1>
+    <p class="muted">{{ post.date_obj|short }}, by {{ post.author }}</p>
+  </div>
+  <div class="wrap" style="padding-bottom:56px">
+    {% if post.image %}<img class="cover" src="{{ post.image }}" alt="">{% endif %}
+    <div class="prose">{{ post.body|safe }}</div>
+  </div>
+</article>
+<section class="band mist"><div class="wrap split"><div><h2>Get news by email</h2><p>Neighborhood updates and event announcements, straight to your inbox.</p></div><div>{{ signup("news") }}</div></div></section>
+{% endblock %}

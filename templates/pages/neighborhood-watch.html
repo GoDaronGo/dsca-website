@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% set title = "Neighborhood Watch" %}
+{% set description = "Join the Delta Shores Neighborhood Watch: safer streets start with you." %}
+{% block main %}
+<div class="wrap page-head"><h1>Keeping Delta Shores safe, together</h1></div>
+<div class="wrap split" style="padding-bottom:72px; align-items:start">
+  <div class="prose">
+    <p class="lede">Safer streets start with you.</p>
+    <p>A safe and secure Delta Shores is something we all value, and it takes a community effort. Our Neighborhood Watch is built on a simple idea: we're stronger and safer when we look out for one another.</p>
+    <p>By joining, you become part of an informed network, sharing information responsibly and helping deter problems simply by being observant. This isn't about patrolling. It's about communication and awareness.</p>
+    <div class="actions"><a class="btn" href="/contact?source=neighborhood-watch">Sign up to participate</a></div>
+  </div>
+  <div style="display:grid; gap:20px">
+    <img class="photo" src="/img/watch-group.webp" alt="Neighbors smiling on a sunny street near a Neighborhood Watch sign" loading="lazy">
+    <img class="photo" src="/img/watch-sign.webp" alt="Neighborhood Watch sign on a green pole" loading="lazy">
+  </div>
+</div>
+{% endblock %}

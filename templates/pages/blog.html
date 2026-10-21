@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% from "_macros.html" import post_item with context %}
+{% set title = "News" %}
+{% set description = "News and updates from the Delta Shores Community Association." %}
+{% block main %}
+<div class="wrap page-head">
+  <h1>News</h1>
+  <p class="lede">Updates on development, parks, events, and the people of Delta Shores.</p>
+</div>
+<div class="wrap" style="padding-bottom:72px">
+  <div class="posts">{% for p in posts %}{{ post_item(p) }}{% endfor %}</div>
+</div>
+{% endblock %}

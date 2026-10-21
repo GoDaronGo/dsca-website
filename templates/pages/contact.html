@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% set title = "Contact" %}
+{% set description = "Update your contact information and choose how you'd like to be involved." %}
+{% set f = integ.contact_form_fields %}
+{% set live = integ.contact_form_action %}
+{% macro n(key) %}{% if live and f[key] %} name="{{ f[key] }}"{% else %} name="{{ key }}"{% endif %}{% endmacro %}
+{% block main %}
+<div class="wrap page-head">
+  <h1>Contact &amp; involvement</h1>
+  <p class="lede">Welcome to the neighborhood. Share your contact information and tell us how you'd like to be involved.</p>
+</div>
+<div class="wrap" style="padding-bottom:72px">
+  {% if not live %}
+  <div class="notice"><p><strong>Preview:</strong> this form isn't connected yet, so it won't send. In the meantime, email <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p></div>
+  {% endif %}
+  <form class="stack" method="post" action="{{ live or '#' }}" target="sent" id="contact-form">
+    <div class="two">
+      <div class="field"><label for="fn">First name <span class="req">*</span></label><input id="fn" type="text" autocomplete="given-name" required{{ n('first_name') }}></div>
+      <div class="field"><label for="ln">Last name <span class="req">*</span></label><input id="ln" type="text" autocomplete="family-name" required{{ n('last_name') }}></div>
+    </div>
+    <p class="hint" style="margin:-12px 0 0">We ask for first and last names to help verify residents. If more than one person in your home wants emails, submit the form for each person.</p>
+    <div class="field"><label for="em">Email <span class="req">*</span></label><p class="hint">Our main way to reach you with mailings and notices.</p><input id="em" type="email" autocomplete="email" required{{ n('email') }}></div>
+    <div class="two">
+      <div class="field"><label for="ph">Phone</label><input id="ph" type="tel" autocomplete="tel"{{ n('phone') }}></div>
+      <div class="field"><label for="ad">Street address</label><input id="ad" type="text" autocomplete="street-address"{{ n('address') }}></div>
+    </div>
+    <div class="field"><label for="co">Which Delta Shores community do you live in? <span class="req">*</span></label>
+      <select id="co" required{{ n('community') }}><option value="">Select a community</option>{% for c in site.communities %}<option>{{ c }}</option>{% endfor %}</select></div>
+    <fieldset><legend>Initiatives</legend><p class="hint">Which community initiatives interest you?</p>
+      {% for i in site.initiatives %}<label class="choice"><input type="checkbox" value="{{ i }}"{{ n('initiatives') }}> {{ i }}</label>{% endfor %}</fieldset>
+    <fieldset><legend>Group chat <span class="req">*</span></legend><p class="hint">Would you like to join the official Delta Shores Community WhatsApp group for announcements and discussion?</p>
+      <label class="choice"><input type="radio" required value="Yes, please add me to the WhatsApp Chat Group."{{ n('group_chat') }}> Yes, add me to the WhatsApp group</label>
+      <label class="choice"><input type="radio" value="No, I prefer not to join the WhatsApp Chat Group at this time."{{ n('group_chat') }}> Not right now</label></fieldset>
+    <fieldset><legend>Block Watch <span class="req">*</span></legend><p class="hint">Are you interested in the Delta Shores Block Watch program for neighborhood safety?</p>
+      <label class="choice"><input type="radio" required value="Yes, I am interested in joining or learning more about the Block Watch."{{ n('block_watch') }}> Yes, I'd like to join or learn more</label>
+      <label class="choice"><input type="radio" value="No, thank you."{{ n('block_watch') }}> No, thank you</label></fieldset>
+    <div class="field"><label for="cm">Comments</label><p class="hint">Notes, suggestions, or questions for the Association board.</p><textarea id="cm"{{ n('comments') }}></textarea></div>
+    <input type="hidden" id="src"{{ n('source') }} value="website">
+    <div><button class="btn" type="submit"{% if not live %} disabled aria-disabled="true"{% endif %}>Send my information</button></div>
+  </form>
+  <div id="thanks" hidden><h2>Thank you</h2><p>We look forward to connecting with you.</p></div>
+  <iframe name="sent" title="Form submission" hidden></iframe>
+</div>
+<script>
+  (function () {
+    var s = new URLSearchParams(location.search).get('source');
+    if (s) document.getElementById('src').value = s;
+    var form = document.getElementById('contact-form');
+    form.addEventListener('submit', function () {
+      setTimeout(function () { form.hidden = true; document.getElementById('thanks').hidden = false; window.scrollTo(0, 0); }, 300);
+    });
+  })();
+</script>
+{% endblock %}

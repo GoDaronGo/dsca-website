@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% from "_macros.html" import event_row, post_item, signup with context %}
+{% set description = "The Delta Shores Community Association connects neighbors, local businesses, and community leaders in South Sacramento." %}
+{% block main %}
+<section class="hero">
+  <img src="/img/hero.webp" alt="Sacramento's Tower Bridge over the river at sunset" width="2000" height="1333" fetchpriority="high">
+  <div class="wrap">
+    <h1>Connect, grow, and thrive together</h1>
+    <p>{{ site.tagline }}</p>
+  </div>
+</section>
+
+{% if upcoming %}{% set e = upcoming[0] %}
+<section class="wrap next" aria-label="Next event">
+  <div class="sign"><div>
+    <div class="when"><span>{{ e.start_dt|mon }}</span><b>{{ e.start_dt|dnum }}</b></div>
+    <div>
+      <p class="label">Next up</p>
+      <h2><a href="/events/{{ e.slug }}">{{ e.title }}</a></h2>
+      <p>{{ e.start_dt.strftime('%A') }}, {{ e.start_dt|time }}–{{ e.end_dt|time }}{% if e.venue %}, {{ e.venue }}{% endif %}</p>
+    </div>
+  </div></div>
+</section>
+{% endif %}
+
+<section class="band">
+  <div class="wrap split">
+    <div>
+      <h2>Neighbors helping neighbors</h2>
+      <p class="lede">We build a strong, inclusive community by connecting homeowners, businesses, and government leaders, and by bringing people together.</p>
+      <p>Block parties, community meetings with city leaders, a neighborhood watch, and a voice on new parks, schools, and businesses coming to Delta Shores.</p>
+      <div class="actions">
+        <a class="btn" href="/events">See events</a>
+        <a class="btn quiet" href="/neighborhood-watch">Neighborhood Watch</a>
+      </div>
+    </div>
+    <img class="photo" src="/img/community-map.webp" alt="Illustrated map of Delta Shores showing homes, shops, and parks" loading="lazy" width="2000" height="1333">
+  </div>
+</section>
+
+{% if upcoming|length > 1 %}
+<section class="band mist">
+  <div class="wrap">
+    <h2>Coming up</h2>
+    <ul class="events">{% for e in upcoming[1:4] %}{{ event_row(e) }}{% endfor %}</ul>
+  </div>
+</section>
+{% endif %}
+
+<section class="band{% if upcoming|length <= 1 %} mist{% endif %}">
+  <div class="wrap">
+    <h2>Latest news</h2>
+    <div class="posts">{% for p in posts[:3] %}{{ post_item(p) }}{% endfor %}</div>
+    <div class="actions"><a class="btn quiet" href="/blog">All news</a></div>
+  </div>
+</section>
+
+<section class="band mist">
+  <div class="wrap split">
+    <div>
+      <h2>Be the first to know</h2>
+      <p>Get event announcements and neighborhood updates by email.</p>
+    </div>
+    <div>{{ signup("home") }}</div>
+  </div>
+</section>
+{% endblock %}

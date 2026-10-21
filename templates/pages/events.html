@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_macros.html" import event_row with context %}
+{% set title = "Events" %}
+{% set description = "Community events for connecting with your Delta Shores neighbors." %}
+{% block main %}
+<div class="wrap page-head">
+  <h1>Events</h1>
+  <p class="lede">Block parties, community meetings, and gatherings with your neighbors.</p>
+</div>
+<div class="wrap">
+  <h2>Upcoming</h2>
+  {% if upcoming %}
+  <ul class="events">{% for e in upcoming %}{{ event_row(e) }}{% endfor %}</ul>
+  {% else %}
+  <p>No events are scheduled right now. <a href="/contact">Join the mailing list</a> to hear about the next one.</p>
+  {% endif %}
+</div>
+<section class="band">
+  <div class="wrap">
+    <h2>Past events</h2>
+    <ul class="events">{% for e in past %}{{ event_row(e, past=true) }}{% endfor %}</ul>
+  </div>
+</section>
+{% endblock %}

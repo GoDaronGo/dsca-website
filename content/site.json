@@ -1,0 +1,48 @@
+{
+  "name": "Delta Shores Community Association",
+  "short_name": "Delta Shores Community",
+  "url": "https://www.deltashorescommunity.com",
+  "email": "info@deltashorescommunity.com",
+  "city": "Sacramento, CA 95832",
+  "tagline": "Serving the Delta Shores community, including the businesses around us.",
+  "nav": [
+    {"label": "About", "href": "/about"},
+    {"label": "Events", "href": "/events"},
+    {"label": "News", "href": "/blog"},
+    {"label": "Neighborhood Watch", "href": "/neighborhood-watch"},
+    {"label": "Resources", "href": "/resources"},
+    {"label": "Contact", "href": "/contact"}
+  ],
+  "social": [
+    {"label": "Facebook", "href": "https://www.facebook.com/profile.php?id=61572196388074"},
+    {"label": "Instagram", "href": "https://www.instagram.com/deltashorescommunity"},
+    {"label": "Nextdoor", "href": "https://nextdoor.com/g/vkcjlvffx/"}
+  ],
+  "integrations": {
+    "_note": "Fill these in once the free accounts exist. Leave a value empty to show the 'not connected yet' fallback.",
+    "zeffy_donation_form_url": "",
+    "sender_signup_form_url": "",
+    "contact_form_action": "",
+    "contact_form_fields": {
+      "_note": "Google Form entry IDs (entry.123456789) for each field, once the Google Form is created.",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "phone": "",
+      "address": "",
+      "community": "",
+      "initiatives": "",
+      "group_chat": "",
+      "block_watch": "",
+      "comments": "",
+      "source": ""
+    }
+  },
+  "board": [
+    {"name": "Junior Goris", "role": "President & Founder", "email": "junior@deltashorescommunity.com", "phone": "347-432-6881", "photo": "/img/board-junior.webp"},
+    {"name": "Daron Go", "role": "Treasurer/Secretary", "email": "daron@deltashorescommunity.com", "phone": "415-490-6413", "photo": "/img/board-daron.webp"},
+    {"name": "Melissa Miles", "role": "Chair of Business Partnerships", "email": "", "phone": "", "photo": ""}
+  ],
+  "communities": ["Coronado", "Catalina", "Avalon", "Balboa", "Edgewater", "Riva", "Dockside", "Ibiza", "Other/Not Applicable"],
+  "initiatives": ["Neighborhood Block Party", "Parks and Beautification Projects", "Community Meetings", "Youth/Family Activities", "Community Communications and Newsletter", "Other"]
+}

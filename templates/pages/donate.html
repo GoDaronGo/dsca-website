@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% set title = "Donate" %}
+{% set description = "Support the Delta Shores Community Association with a donation." %}
+{% block main %}
+<div class="wrap page-head">
+  <h1>Make a donation</h1>
+  <p class="lede">Your gift, of any size, funds community events, resources, and local initiatives in Delta Shores.</p>
+</div>
+<div class="wrap" style="padding-bottom:72px">
+  <div class="prose">
+    <p>The Delta Shores Community Association brings homeowners, local businesses, and government leaders together to build a strong, inclusive neighborhood. We rely on the generosity of neighbors like you. Thank you for helping Delta Shores thrive.</p>
+    <p class="muted">The Delta Shores Community Association is a 501(c)(3) nonprofit.</p>
+  </div>
+  {% if integ.zeffy_donation_form_url %}
+  <iframe class="embed" src="{{ integ.zeffy_donation_form_url }}" title="Donation form" allowpaymentrequest allow="payment"></iframe>
+  {% else %}
+  <div class="notice"><p><strong>Preview:</strong> the donation form will appear here once the Zeffy account is connected. To give today, email <a href="mailto:{{ site.email }}?subject=Donation">{{ site.email }}</a>.</p></div>
+  {% endif %}
+</div>
+{% endblock %}

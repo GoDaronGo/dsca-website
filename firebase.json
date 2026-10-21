@@ -1,0 +1,21 @@
+{
+  "hosting": {
+    "public": "public",
+    "cleanUrls": true,
+    "trailingSlash": false,
+    "ignore": ["firebase.json", "**/.*"],
+    "redirects": [
+      {"source": "/home", "destination": "/", "type": 301},
+      {"source": "/contact-us", "destination": "/contact", "type": 301},
+      {"source": "/store-1-0{,/**}", "destination": "/", "type": 301},
+      {"source": "/cart", "destination": "/", "type": 301},
+      {"source": "/rsvp", "destination": "/events", "type": 301},
+      {"source": "/block-party-flyer", "destination": "/events/blockparty-2025-may", "type": 301},
+      {"source": "/s/Delta-Shores-ASSOCIATION-BYLAWS-1.pdf", "destination": "/bylaws.pdf", "type": 301}
+    ],
+    "headers": [
+      {"source": "**/*.@(webp|png|jpg|ico|css|pdf)", "headers": [{"key": "Cache-Control", "value": "public, max-age=604800"}]},
+      {"source": "**/*.ics", "headers": [{"key": "Content-Type", "value": "text/calendar; charset=utf-8"}]}
+    ]
+  }
+}

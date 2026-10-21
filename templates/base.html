@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% set full_title = (title ~ " — " ~ site.name) if title else site.name %}
+<title>{{ full_title }}</title>
+<meta name="description" content="{{ description or site.tagline }}">
+<meta property="og:title" content="{{ title or site.name }}">
+<meta property="og:description" content="{{ description or site.tagline }}">
+<meta property="og:image" content="{{ site.url }}{{ og_image or '/img/hero.webp' }}">
+<meta property="og:type" content="website">
+<link rel="icon" href="/img/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600..800&family=Public+Sans:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/css/site.css">
+{% block head %}{% endblock %}
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+{% macro navlist() %}
+<nav class="nav" aria-label="Main">
+  <ul>
+    {% for item in site.nav %}
+    <li><a href="{{ item.href }}"{% if item.href == '/' ~ page %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+    {% endfor %}
+    <li><a class="btn" href="/take-action">Get involved</a></li>
+  </ul>
+</nav>
+{% endmacro %}
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/img/logo.webp" alt="{{ site.name }} home" width="500" height="159"></a>
+    {{ navlist() }}
+    <details class="menu"><summary>Menu</summary>{{ navlist() }}</details>
+  </div>
+</header>
+<main id="main">
+{% block main %}{% endblock %}
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h2>{{ site.name }}</h2>
+        <p>A volunteer-run 501(c)(3) nonprofit connecting neighbors, local businesses, and community leaders in {{ site.city }}.</p>
+        <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
+      </div>
+      <div>
+        <h2>Visit</h2>
+        <ul>
+          <li><a href="/events">Events</a></li>
+          <li><a href="/blog">News</a></li>
+          <li><a href="/take-action">Volunteer</a></li>
+          <li><a href="/donate">Donate</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Follow</h2>
+        <ul>
+          {% for s in site.social %}<li><a href="{{ s.href }}" rel="noopener">{{ s.label }}</a></li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+    <p class="small">© {{ site.year }} {{ site.name }}. <a href="/disclaimer">Legal disclaimer</a> · <a href="/bylaws.pdf">By-laws (PDF)</a></p>
+  </div>
+</footer>
+</body>
+</html>

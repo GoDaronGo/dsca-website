@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% set title = "Get involved" %}
+{% set description = "Volunteer or donate to support the Delta Shores Community Association." %}
+{% block main %}
+<div class="wrap page-head"><h1>Get involved</h1></div>
+<div class="wrap split" style="align-items:start">
+  <div class="prose">
+    <h2>Volunteer</h2>
+    <p>Our events wouldn't happen without volunteers. Share some of your time and talents to help run events that bring neighbors together.</p>
+    <div class="actions"><a class="btn" href="/contact?source=volunteer">Sign up to volunteer</a></div>
+  </div>
+  <div class="prose">
+    <h2>Donate</h2>
+    <p>The Association connects residents, businesses, and leaders through community events and services. Your donation directly supports that work.</p>
+    <div class="actions"><a class="btn give" href="/donate">Donate</a></div>
+  </div>
+</div>
+<div class="wrap" style="padding:56px var(--gutter) 72px">
+  <img class="photo" src="/img/take-action.webp" alt="Neighbors working together outdoors" loading="lazy">
+  <p class="muted" style="margin-top:16px">Questions? Email <a href="mailto:{{ site.email }}?subject=Inquiry">{{ site.email }}</a>.</p>
+</div>
+{% endblock %}

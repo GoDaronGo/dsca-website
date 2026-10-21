@@ -1,0 +1,22 @@
+# Builds the site and deploys it to Firebase Hosting on every push to main.
+# Needs one repository secret: FIREBASE_SERVICE_ACCOUNT (JSON key for a
+# service account with the "Firebase Hosting Admin" role), plus the project
+# ID in .firebaserc.
+name: Deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt && python build.py
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channelId: live
