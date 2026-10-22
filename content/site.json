@@ -86,6 +86,13 @@
       "email": "",
       "phone": "",
       "photo": ""
+    },
+    {
+      "name": "Monserrat Garcia",
+      "role": "Board Member",
+      "email": "",
+      "phone": "",
+      "photo": "/img/site/monserrat.webp"
     }
   ],
   "communities": [
