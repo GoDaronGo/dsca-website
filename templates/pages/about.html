@@ -4,16 +4,15 @@
 {% block main %}
 <div class="wrap page-head"><h1>About Delta Shores Community</h1></div>
 <div class="wrap prose">
-  <p class="lede">A grassroots 501(c)(3) nonprofit formed by residents and businesses who want a connected, engaged neighborhood.</p>
-  <p>Delta Shores Community covers the growing Delta Shores area, building bridges between neighbors, local businesses, and community leaders.</p>
-  <p>Local homeowners associations handle regulation and maintenance for individual subdivisions. We stepped up to create a space for broader civic community building and advocacy, intentionally including the businesses that serve our area.</p>
-  <p>Our focus is twofold: fostering strong community bonds and making sure our collective voice is heard. A connected community is a strong community, which is why we bring neighbors together through block parties, with more social gatherings, meetings, and service projects planned.</p>
-  <p>We also work with local leadership to advocate for Delta Shores residents. We've hosted Mayor Kevin McCarty, Assemblymember Stephanie Nguyen, Councilmember Mai Vang (District 8), Police Chief Kathy Lester, and Fire Department representatives. As the neighborhood grows, with city parks and a school planned, we aim to help shape those developments.</p>
-  <p>Delta Shores Community is about neighbors helping neighbors build the best community possible. We invite you to get involved.</p>
+  <p>Delta Shores Community is a grassroots 501(c)(3) nonprofit organization formed by residents and businesses passionate about creating a connected and engaged neighborhood. We encompass the growing Delta Shores area, aiming to build bridges between neighbors, local businesses, and community leaders.</p>
+  <p>Recognizing that local Homeowners Associations serve a specific regulatory and maintenance function for individual subdivisions, we stepped up to create a space dedicated to broader civic community building and advocacy, intentionally including the businesses that serve our area.</p>
+  <p>Our focus is twofold: fostering strong community bonds and ensuring our collective voice is heard. We believe that a connected community is a strong community, which is why we've enjoyed bringing neighbors together through events like block parties, with more social gatherings, meetings, and service projects planned for the future.</p>
+  <p>Simultaneously, we are actively working to engage with local leadership to advocate for the needs and desires of Delta Shores residents. We've already successfully hosted Mayor Kevin McCarty, Assemblymember Stephanie Nguyen, City Council Member Mai Vang (District 8), Police Chief Kathy Lester, and Fire Department representatives, facilitating important dialogue. As our neighborhood grows, with city parks and a school planned, we aim to be a positive influence in shaping these developments.</p>
+  <p>Delta Shores Community is about neighbors helping neighbors build the best community possible. We invite you to get involved!</p>
 </div>
 <section class="band">
   <div class="wrap">
-    <h2>Board members</h2>
+    <h2>Board Members</h2>
     <ul class="board">
       {% for m in site.board %}
       <li>
@@ -21,7 +20,7 @@
         <h3>{{ m.name }}</h3>
         <p class="muted">{{ m.role }}</p>
         {% if m.email %}<p><a href="mailto:{{ m.email }}">{{ m.email }}</a></p>{% endif %}
-        {% if m.phone %}<p><a href="tel:{{ m.phone|replace('-', '') }}">{{ m.phone }}</a></p>{% endif %}
+        {% if m.phone %}<p><a href="sms:+1{{ m.phone|replace('-', '') }}">{{ m.phone }}</a></p>{% endif %}
       </li>
       {% endfor %}
     </ul>

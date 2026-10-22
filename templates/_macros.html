@@ -1,11 +1,13 @@
 {% macro event_row(e, past=false) %}
 <li{% if past %} class="past"{% endif %}>
   <div class="date-sign" aria-hidden="true"><span><small>{{ e.start_dt|mon }}</small><b>{{ e.start_dt|dnum }}</b></span></div>
-  <div>
+  <div class="ev-main">
     <h3><a href="/events/{{ e.slug }}">{{ e.title }}</a></h3>
-    <p class="meta">{{ e.start_dt|day }}, {{ e.start_dt|time }}–{{ e.end_dt|time }}{% if e.venue %}<br>{{ e.venue }}{% endif %}</p>
-    {% if not past %}<p>{{ e.excerpt|plain(160) }}</p>{% endif %}
+    <p class="meta">{{ e.start_dt|day }}, {{ e.start_dt|time }}–{{ e.end_dt|time }}{% if e.venue %}<br>{{ e.venue }}{% endif %}{% if e.categories %}<br>Posted in {{ e.categories|join(', ') }}{% endif %}</p>
+    {% if e.excerpt_html %}<div class="ev-excerpt">{{ e.excerpt_html|safe }}</div>{% endif %}
+    <p class="ev-link"><a href="/events/{{ e.slug }}">View event</a></p>
   </div>
+  {% if e.image %}<a class="ev-thumb" href="/events/{{ e.slug }}" tabindex="-1" aria-hidden="true"><img src="{{ e.image }}" alt="" loading="lazy"></a>{% endif %}
 </li>
 {% endmacro %}
 
@@ -14,14 +16,10 @@
   {% if p.image %}<a class="img" href="/blog/{{ p.slug }}" tabindex="-1" aria-hidden="true"><img src="{{ p.image }}" alt="" loading="lazy"></a>{% endif %}
   <time datetime="{{ p.date }}">{{ p.date_obj|short }}</time>
   <h3><a href="/blog/{{ p.slug }}">{{ p.title }}</a></h3>
-  <p>{{ p.excerpt|plain(150) }}</p>
+  <p>{{ p.excerpt }}</p>
 </article>
 {% endmacro %}
 
 {% macro signup(source) %}
-{% if integ.sender_signup_form_url %}
-<iframe class="embed" style="min-height:480px;background:transparent" src="{{ integ.sender_signup_form_url }}" title="Mailing list sign-up"></iframe>
-{% else %}
-<a class="btn" href="/contact?source={{ source }}">Join the mailing list</a>
-{% endif %}
+<a class="btn" href="/contact?source={{ source }}">Mailing List Sign-Up</a>
 {% endmacro %}

@@ -13,13 +13,15 @@
   <div class="wrap" style="padding-bottom:72px">
     <dl class="facts">
       <div><dt>When</dt><dd>{{ ev.start_dt|day }}<br>{{ ev.start_dt|time }}–{{ ev.end_dt|time }}</dd></div>
-      {% if ev.venue or ev.address %}<div><dt>Where</dt><dd>{% if ev.venue %}{{ ev.venue }}<br>{% endif %}{% if ev.address %}{{ ev.address }}, {{ ev.city }}{% if ev.map_url %}<br><a href="{{ ev.map_url }}" rel="noopener">Get directions</a>{% endif %}{% endif %}</dd></div>{% endif %}
+      {% if ev.venue or ev.address %}<div><dt>Where</dt><dd>{% if ev.venue %}{{ ev.venue }}<br>{% endif %}{% if ev.address %}{{ ev.address }}, {{ ev.city }}{% if ev.map_url %}<br><a href="{{ ev.map_url }}" rel="noopener">Map and directions</a>{% endif %}{% endif %}</dd></div>{% endif %}
+      {% if ev.source_url %}<div><dt>More</dt><dd><a href="{{ ev.source_url }}" rel="noopener">Event website</a></dd></div>{% endif %}
     </dl>
     {% if not is_past %}
     <div class="actions" style="margin:0 0 32px"><a class="btn quiet" href="{{ ev.gcal_url }}" rel="noopener">Add to Google Calendar</a><a class="btn quiet" href="/events/{{ ev.slug }}.ics">Add to Apple or Outlook calendar</a></div>
     {% endif %}
-    {% if ev.image and ev.image not in ev.body %}<img class="cover" src="{{ ev.image }}" alt="">{% endif %}
+    {% if ev.image and '<img' not in ev.body %}<img class="cover" src="{{ ev.image }}" alt="">{% endif %}
     <div class="prose">{{ ev.body|safe }}</div>
+    {% if ev.categories or ev.tags %}<p class="muted" style="margin-top:32px">{% if ev.categories %}Posted in: {{ ev.categories|join(', ') }}{% endif %}{% if ev.categories and ev.tags %}<br>{% endif %}{% if ev.tags %}Tagged: {{ ev.tags|join(', ') }}{% endif %}</p>{% endif %}
   </div>
 </article>
 {% endblock %}

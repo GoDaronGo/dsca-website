@@ -25,7 +25,7 @@
     {% for item in site.nav %}
     <li><a href="{{ item.href }}"{% if item.href == '/' ~ page %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
     {% endfor %}
-    <li><a class="btn" href="/take-action">Get involved</a></li>
+    <li><a class="btn" href="/take-action">Take Action</a></li>
   </ul>
 </nav>
 {% endmacro %}
@@ -53,6 +53,7 @@
           <li><a href="/events">Events</a></li>
           <li><a href="/blog">News</a></li>
           <li><a href="/take-action">Volunteer</a></li>
+          <li><a href="/contact">Mailing list sign-up</a></li>
           <li><a href="/donate">Donate</a></li>
         </ul>
       </div>

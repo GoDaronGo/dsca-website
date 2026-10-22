@@ -77,7 +77,10 @@ def build():
     for e in events:
         e["start_dt"] = dt.datetime.fromisoformat(e["start"]).astimezone(TZ)
         e["end_dt"] = dt.datetime.fromisoformat(e["end"]).astimezone(TZ)
-        e["excerpt"] = e.get("excerpt") or plain(e["body"], 160)
+        e["excerpt_html"] = e.get("excerpt", "")
+        e["excerpt"] = plain(e["excerpt_html"], 200) or plain(e["body"], 160)
+        e["categories"] = [c.strip() for c in e.get("categories", "").split(",") if c.strip()]
+        e["tags"] = [c.strip() for c in e.get("tags", "").split(",") if c.strip()]
         e["is_online"] = "online" in (e.get("venue", "") + e["title"]).lower()
         q = lambda s: re.sub(r"\s+", "+", s)
         loc = ", ".join(x for x in (e.get("address"), e.get("city")) if x)
@@ -98,7 +101,7 @@ def build():
     env.filters["short"] = lambda d: d.strftime("%b %-d, %Y")
     env.filters["mon"] = lambda d: d.strftime("%b")
     env.filters["dnum"] = lambda d: d.strftime("%-d")
-    env.filters["time"] = lambda d: d.strftime("%-I:%M %p").replace(":00 ", " ")
+    env.filters["time"] = lambda d: d.strftime("%-I:%M %p")
     g = dict(site=site, posts=posts, upcoming=upcoming, past=past, integ=site["integrations"])
 
     if OUT.exists():

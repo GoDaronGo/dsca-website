@@ -1,22 +1,22 @@
 {% extends "base.html" %}
-{% set title = "Get involved" %}
-{% set description = "Volunteer or donate to support the Delta Shores Community Association." %}
+{% set title = "Take Action" %}
+{% set description = "Donate or volunteer to support the Delta Shores Community Association." %}
 {% block main %}
-<div class="wrap page-head"><h1>Get involved</h1></div>
-<div class="wrap split" style="align-items:start">
-  <div class="prose">
-    <h2>Volunteer</h2>
-    <p>Our events wouldn't happen without volunteers. Share some of your time and talents to help run events that bring neighbors together.</p>
-    <div class="actions"><a class="btn" href="/contact?source=volunteer">Sign up to volunteer</a></div>
-  </div>
+<div class="wrap page-head"><h1>Take Action</h1></div>
+<div class="wrap" style="padding-bottom:32px">
+  <img class="photo" src="/img/take-action.webp" alt="Neighbors working together outdoors" loading="lazy">
+</div>
+<div class="wrap split" style="align-items:start; padding-bottom:72px">
   <div class="prose">
     <h2>Donate</h2>
-    <p>The Association connects residents, businesses, and leaders through community events and services. Your donation directly supports that work.</p>
+    <p>The Delta Shores Community Association actively connects residents, businesses, and leaders, enhancing our quality of life through community events and valuable services. Your generous donation directly supports this important work, helping the Delta Shores community thrive!</p>
     <div class="actions"><a class="btn give" href="/donate">Donate</a></div>
   </div>
+  <div class="prose">
+    <h2>Volunteer</h2>
+    <p>Our fantastic community events simply wouldn't be possible without dedicated volunteers like you lending a hand. Please consider sharing some of your time and talents to help us run successful events that strengthen our Delta Shores spirit and bring neighbors together.</p>
+    <div class="actions"><a class="btn" href="/contact?source=Volunteer">Sign-Up Now</a></div>
+  </div>
 </div>
-<div class="wrap" style="padding:56px var(--gutter) 72px">
-  <img class="photo" src="/img/take-action.webp" alt="Neighbors working together outdoors" loading="lazy">
-  <p class="muted" style="margin-top:16px">Questions? Email <a href="mailto:{{ site.email }}?subject=Inquiry">{{ site.email }}</a>.</p>
-</div>
+<div class="wrap" style="padding-bottom:72px"><p class="muted">Questions? Email <a href="mailto:{{ site.email }}?subject=Inquiry">{{ site.email }}</a>.</p></div>
 {% endblock %}
