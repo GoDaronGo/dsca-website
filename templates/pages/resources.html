@@ -31,6 +31,17 @@
 </section>
 
 <section class="band mist">
+  <div class="wrap">
+    <h2>Map of Delta Shores</h2>
+    <p class="muted section-note">Neighborhoods, shopping, and parks across the Delta Shores area.</p>
+    <a class="map-link" href="/img/community-map.webp" aria-label="Open the full-size Delta Shores map">
+      <img class="photo" src="/img/community-map.webp" alt="Illustrated map of Delta Shores showing residential neighborhoods, retail centers, and parks" loading="lazy" width="2000" height="1333">
+    </a>
+    <p class="muted" style="margin-top:12px"><a href="/img/community-map.webp">Open the full-size map</a></p>
+  </div>
+</section>
+
+<section class="band">
   <div class="wrap split res-two" style="align-items:start">
     <div>
       <h2>Around Delta Shores</h2>
@@ -44,7 +55,7 @@
       <h2>Supporting Businesses</h2>
       <ul class="res-list">
         {% for s in site.supporters %}
-        <li><a href="{{ s.url }}" rel="noopener">{{ s.name }}</a><span>{{ host(s.url) }}</span></li>
+        <li>{% if s.url %}<a href="{{ s.url }}" rel="noopener">{{ s.name }}</a><span>{{ host(s.url) }}</span>{% else %}<strong>{{ s.name }}</strong>{% endif %}</li>
         {% endfor %}
       </ul>
       <p class="muted" style="margin-top:20px">Own a local business? <a href="/blog/business-spotlight">Learn about the Business Spotlight</a>.</p>
