@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="/css/site.css">
 {% block head %}{% endblock %}
 </head>
-<body>
+<body class="{% block bodyclass %}{% endblock %}">
 <a class="skip" href="#main">Skip to content</a>
 {% macro navlist() %}
 <nav class="nav" aria-label="Main">
@@ -31,7 +31,7 @@
 {% endmacro %}
 <header class="site-head">
   <div class="wrap">
-    <a class="brand" href="/"><img src="/img/logo.webp" alt="{{ site.name }} home" width="500" height="159"></a>
+    <a class="brand" href="/"><img class="logo-color" src="/img/logo.webp" alt="{{ site.name }} home" width="900" height="285"><img class="logo-light" src="/img/logo-light.webp" alt="{{ site.name }} home" width="900" height="285"></a>
     {{ navlist() }}
     <details class="menu"><summary>Menu</summary>{{ navlist() }}</details>
   </div>
@@ -40,20 +40,28 @@
 {% block main %}{% endblock %}
 </main>
 <footer class="site-foot">
-  <div class="wrap">
-    <div class="cols">
+  <div class="wrap foot-top">
+    <div class="foot-brand">
+      <img src="/img/logo-light.webp" alt="{{ site.name }}" width="900" height="285" loading="lazy">
+      <p>A grassroots 501(c)(3) nonprofit connecting neighbors, local businesses, and community leaders across Delta Shores.</p>
+      <p><a href="mailto:{{ site.email }}">{{ site.email }}</a><br>{{ site.city }}</p>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
       <div>
-        <h2>{{ site.name }}</h2>
-        <p>A volunteer-run 501(c)(3) nonprofit connecting neighbors, local businesses, and community leaders in {{ site.city }}.</p>
-        <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-      </div>
-      <div>
-        <h2>Visit</h2>
+        <h2>Explore</h2>
         <ul>
+          <li><a href="/about">About</a></li>
           <li><a href="/events">Events</a></li>
           <li><a href="/blog">News</a></li>
+          <li><a href="/neighborhood-watch">Neighborhood Watch</a></li>
+          <li><a href="/resources">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Get involved</h2>
+        <ul>
+          <li><a href="/contact">Mailing List Sign-Up</a></li>
           <li><a href="/take-action">Volunteer</a></li>
-          <li><a href="/contact">Mailing list sign-up</a></li>
           <li><a href="/donate">Donate</a></li>
         </ul>
       </div>
@@ -63,8 +71,11 @@
           {% for s in site.social %}<li><a href="{{ s.href }}" rel="noopener">{{ s.label }}</a></li>{% endfor %}
         </ul>
       </div>
-    </div>
-    <p class="small">© {{ site.year }} {{ site.name }}. <a href="/disclaimer">Legal disclaimer</a> · <a href="/bylaws.pdf">By-laws (PDF)</a></p>
+    </nav>
+  </div>
+  <div class="wrap foot-bottom">
+    <p style="margin:0">© {{ site.year }} {{ site.name }}</p>
+    <ul><li><a href="/disclaimer">Legal Disclaimer</a></li><li><a href="/bylaws.pdf">By-Laws (PDF)</a></li></ul>
   </div>
 </footer>
 </body>
