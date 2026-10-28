@@ -102,7 +102,9 @@ def build():
     env.filters["mon"] = lambda d: d.strftime("%b")
     env.filters["dnum"] = lambda d: d.strftime("%-d")
     env.filters["time"] = lambda d: d.strftime("%-I:%M %p")
-    g = dict(site=site, posts=posts, upcoming=upcoming, past=past, integ=site["integrations"])
+    import hashlib
+    asset_v = hashlib.md5((STATIC / "css" / "site.css").read_bytes()).hexdigest()[:10]
+    g = dict(site=site, posts=posts, upcoming=upcoming, past=past, integ=site["integrations"], asset_v=asset_v)
 
     if OUT.exists():
         shutil.rmtree(OUT)
