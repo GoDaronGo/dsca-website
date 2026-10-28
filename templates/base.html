@@ -78,5 +78,23 @@
     <ul><li><a href="/disclaimer">Legal Disclaimer</a></li><li><a href="/bylaws.pdf">By-Laws (PDF)</a></li></ul>
   </div>
 </footer>
+<script>
+/* Keep upcoming events current between site rebuilds: label today's and
+   tomorrow's events, and hide ones that have already ended. */
+(function () {
+  var now = new Date();
+  var day = function (d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(); };
+  var today = day(now), oneDay = 864e5;
+  document.querySelectorAll('[data-start][data-end]').forEach(function (el) {
+    var start = new Date(el.dataset.start), end = new Date(el.dataset.end);
+    if (end < now) { el.hidden = true; return; }
+    var label = el.querySelector('[data-when-label]');
+    if (!label) return;
+    var d = day(start);
+    var text = start <= now ? 'Happening now' : d === today ? 'Today' : d === today + oneDay ? 'Tomorrow' : '';
+    if (text) { label.textContent = text; label.hidden = false; }
+  });
+})();
+</script>
 </body>
 </html>

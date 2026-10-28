@@ -12,11 +12,11 @@
 </section>
 
 {% if upcoming %}{% set e = upcoming[0] %}
-<section class="wrap next" aria-label="Next event">
+<section class="wrap next" aria-label="Next event" data-start="{{ e.start_dt.isoformat() }}" data-end="{{ e.end_dt.isoformat() }}">
   <div class="sign"><div>
     <div class="when"><span>{{ e.start_dt|mon }}</span><b>{{ e.start_dt|dnum }}</b></div>
     <div>
-      <p class="label">Next up</p>
+      <p class="label" data-when-label>Next up</p>
       <h2><a href="/events/{{ e.slug }}">{{ e.title }}</a></h2>
       <p>{{ e.start_dt.strftime('%A') }}, {{ e.start_dt|time }}–{{ e.end_dt|time }}{% if e.venue %}, {{ e.venue }}{% endif %}</p>
     </div>
@@ -38,16 +38,16 @@
   </div>
 </section>
 
-{% if upcoming|length > 1 %}
+{% if upcoming %}
 <section class="band mist">
   <div class="wrap">
     <h2>Coming up</h2>
-    <ul class="events">{% for e in upcoming[1:4] %}{{ event_row(e) }}{% endfor %}</ul>
+    <ul class="events">{% for e in upcoming[:4] %}{{ event_row(e) }}{% endfor %}</ul>
   </div>
 </section>
 {% endif %}
 
-<section class="band{% if upcoming|length <= 1 %} mist{% endif %}">
+<section class="band{% if not upcoming %} mist{% endif %}">
   <div class="wrap">
     <h2>Latest news</h2>
     <div class="posts">{% for p in posts[:3] %}{{ post_item(p) }}{% endfor %}</div>

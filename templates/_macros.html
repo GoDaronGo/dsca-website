@@ -1,9 +1,9 @@
 {% macro event_row(e, past=false) %}
-<li{% if past %} class="past"{% endif %}>
+<li{% if past %} class="past"{% else %} data-start="{{ e.start_dt.isoformat() }}" data-end="{{ e.end_dt.isoformat() }}"{% endif %}>
   <div class="date-sign" aria-hidden="true"><span><small>{{ e.start_dt|mon }}</small><b>{{ e.start_dt|dnum }}</b></span></div>
   <div class="ev-main">
     <h3><a href="/events/{{ e.slug }}">{{ e.title }}</a></h3>
-    <p class="meta">{{ e.start_dt|day }}, {{ e.start_dt|time }}–{{ e.end_dt|time }}{% if e.venue %}<br>{{ e.venue }}{% endif %}{% if e.categories %}<br>Posted in {{ e.categories|join(', ') }}{% endif %}</p>
+    <p class="meta">{% if not past %}<strong class="when-badge" data-when-label hidden></strong>{% endif %}{{ e.start_dt|day }}, {{ e.start_dt|time }}–{{ e.end_dt|time }}{% if e.venue %}<br>{{ e.venue }}{% endif %}{% if e.categories %}<br>Posted in {{ e.categories|join(', ') }}{% endif %}</p>
     {% if e.excerpt_html %}<div class="ev-excerpt">{{ e.excerpt_html|safe }}</div>{% endif %}
     <p class="ev-link"><a href="/events/{{ e.slug }}">View event</a></p>
   </div>
