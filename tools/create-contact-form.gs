@@ -1,9 +1,16 @@
 /**
- * One-time setup: creates the DSCA Contact & Involvement Google Form,
- * links it to a new response spreadsheet, and logs the settings the website
- * needs (formResponse URL + entry IDs) for content/site.json.
- * Run createDscaContactForm() once from the Apps Script editor.
+ * DSCA website contact form: Google Form + response sheet + Sender sync.
+ *
+ * One-time setup: run createDscaContactForm() from the Apps Script editor.
+ * It creates the form and sheet, installs the on-submit trigger, and logs the
+ * settings the website needs (formResponse URL + entry IDs) for site.json.
+ *
+ * Sender sync: each submission is added to Sender (sender.net) in the group
+ * named SENDER_GROUP_NAME. The API token lives in Script Properties as
+ * SENDER_TOKEN (Project Settings > Script Properties) — never in this code.
  */
+var SENDER_GROUP_NAME = 'Website Sign-ups';
+
 function createDscaContactForm() {
   var communities = ['Coronado', 'Catalina', 'Avalon', 'Balboa', 'Edgewater', 'Riva', 'Dockside', 'Ibiza', 'Other/Not Applicable'];
   var initiatives = ['Neighborhood Block Party', 'Parks and Beautification Projects', 'Community Meetings', 'Youth/Family Activities', 'Community Communications and Newsletter', 'Other'];
@@ -37,7 +44,7 @@ function createDscaContactForm() {
   var sheet = SpreadsheetApp.create('DSCA Contact Form Responses');
   form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
 
-  // Build a pre-filled URL to read each question's entry ID.
+  // Pre-filled URL reveals each question's entry ID.
   var r = form.createResponse();
   r.withItemResponse(items.first_name.createResponse('x'));
   r.withItemResponse(items.last_name.createResponse('x'));
@@ -50,18 +57,88 @@ function createDscaContactForm() {
   r.withItemResponse(items.block_watch.createResponse(watchYes));
   r.withItemResponse(items.comments.createResponse('x'));
   r.withItemResponse(items.source.createResponse('x'));
-  var prefilled = r.toPrefilledUrl();
-
-  var ids = (prefilled.match(/entry\.\d+/g) || []);
+  var ids = (r.toPrefilledUrl().match(/entry\.\d+/g) || []);
   var keys = ['first_name', 'last_name', 'email', 'phone', 'address', 'community', 'initiatives', 'group_chat', 'block_watch', 'comments', 'source'];
   var fields = {};
   keys.forEach(function (k, i) { fields[k] = ids[i] || ''; });
 
-  var out = {
+  PropertiesService.getScriptProperties().setProperty('FORM_ID', form.getId());
+  installTrigger_(form);
+
+  Logger.log('DSCA_CONFIG ' + JSON.stringify({
     contact_form_action: form.getPublishedUrl().replace(/\/viewform.*$/, '/formResponse'),
     contact_form_fields: fields,
     edit_url: form.getEditUrl(),
     sheet_url: sheet.getUrl()
+  }));
+}
+
+function installTrigger_(form) {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'onDscaFormSubmit') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('onDscaFormSubmit').forForm(form).onFormSubmit().create();
+}
+
+/** Runs automatically on every form submission. */
+function onDscaFormSubmit(e) {
+  var a = {};
+  e.response.getItemResponses().forEach(function (ir) { a[ir.getItem().getTitle()] = ir.getResponse(); });
+  addToSender_(a);
+}
+
+function senderFetch_(token, path, options) {
+  options = options || {};
+  options.headers = { Authorization: 'Bearer ' + token, Accept: 'application/json' };
+  options.muteHttpExceptions = true;
+  return UrlFetchApp.fetch('https://api.sender.net/v2' + path, options);
+}
+
+function senderToken_() {
+  var token = PropertiesService.getScriptProperties().getProperty('SENDER_TOKEN');
+  if (!token) throw new Error('SENDER_TOKEN is not set (Project Settings > Script Properties).');
+  return token.trim();
+}
+
+function senderGroupId_(token) {
+  var props = PropertiesService.getScriptProperties();
+  var cached = props.getProperty('SENDER_GROUP_ID');
+  if (cached) return cached;
+  var res = senderFetch_(token, '/groups?limit=100');
+  var list = (JSON.parse(res.getContentText()).data) || [];
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].title === SENDER_GROUP_NAME) { props.setProperty('SENDER_GROUP_ID', list[i].id); return list[i].id; }
+  }
+  return null;
+}
+
+function addToSender_(a) {
+  var token = senderToken_();
+  var payload = {
+    email: String(a['Email'] || '').trim(),
+    firstname: a['First name'] || '',
+    lastname: a['Last name'] || ''
   };
-  Logger.log('DSCA_CONFIG ' + JSON.stringify(out));
+  var groupId = senderGroupId_(token);
+  if (groupId) payload.groups = [groupId];
+  var digits = String(a['Phone'] || '').replace(/\D/g, '');
+  if (digits.length === 10) payload.phone = '+1' + digits;
+  else if (digits.length === 11 && digits.charAt(0) === '1') payload.phone = '+' + digits;
+  var res = senderFetch_(token, '/subscribers', {
+    method: 'post', contentType: 'application/json', payload: JSON.stringify(payload)
+  });
+  Logger.log('Sender ' + res.getResponseCode() + ' ' + res.getContentText().slice(0, 300));
+  if (res.getResponseCode() >= 300) {
+    throw new Error('Sender did not accept ' + payload.email + ' (' + res.getResponseCode() + '): ' + res.getContentText().slice(0, 300));
+  }
+}
+
+/** Run this after saving SENDER_TOKEN to confirm the connection. */
+function testSenderConnection() {
+  var token = senderToken_();
+  var res = senderFetch_(token, '/groups?limit=100');
+  Logger.log('Sender status ' + res.getResponseCode());
+  var list = (JSON.parse(res.getContentText()).data) || [];
+  Logger.log('Groups: ' + list.map(function (g) { return g.title; }).join(', '));
+  Logger.log('Website group found: ' + (senderGroupId_(token) ? 'yes' : 'NO — create a group named "' + SENDER_GROUP_NAME + '"'));
 }
