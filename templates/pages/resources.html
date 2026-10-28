@@ -1,21 +1,54 @@
 {% extends "base.html" %}
 {% set title = "Resources" %}
-{% set description = "Delta Shores websites and supporting businesses." %}
+{% set description = "Delta Shores home builders, shopping, and supporting local businesses." %}
+{% macro host(u) %}{{ u.split('//')[1].split('/')[0].replace('www.', '') }}{% endmacro %}
 {% block main %}
-<div class="wrap page-head"><h1>Resources</h1></div>
-<div class="wrap" style="padding-bottom:72px">
-  <h2>Websites:</h2>
-  <ul class="links">
-    <li><a href="https://sighomes.com/delta-shores/" rel="noopener">Signature Homes</a>
-      <ul><li>Coronado</li><li>Catalina</li><li>Avalon</li><li>Balboa</li></ul></li>
-    <li><a href="https://russellsquareinc.com/portfolio/delta-shores/" rel="noopener">Delta Shores Apartments by Russell Square</a></li>
-    <li><a href="https://www.shopdeltashores.com/" rel="noopener">Delta Shores Shopping Center</a></li>
-  </ul>
-  <h2>Supporting Businesses:</h2>
-  <ul class="links">
-    <li><a href="http://casafloresrestaurants.com/" rel="noopener">Casa Flores</a></li>
-    <li><a href="https://www.firetaproom.com/" rel="noopener">Fire Taproom</a></li>
-    <li><a href="https://www.islandfinpoke.com/locations/" rel="noopener">Island Fin Poke</a></li>
-  </ul>
-</div>
+<section class="page-banner">
+  <img src="/img/site/delta5.webp" alt="Walkway between shops at the Delta Shores shopping center" width="1056" height="594">
+  <div class="wrap"><h1>Resources</h1></div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Home builders</h2>
+    <p class="muted section-note">The builders and neighborhoods that make up Delta Shores.</p>
+    <ul class="builders">
+      {% for b in site.builders %}
+      <li>
+        <div class="builder-name">
+          <h3>{{ b.name }}</h3>
+          <a href="{{ b.url }}" rel="noopener">{{ host(b.url) }}</a>
+        </div>
+        <ul class="hoods" aria-label="{{ b.name }} neighborhoods">
+          {% for c in b.communities %}
+          <li>{% if c.url %}<a href="{{ c.url }}" rel="noopener">{{ c.name }}</a>{% else %}<span>{{ c.name }}</span>{% endif %}</li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="band mist">
+  <div class="wrap split res-two" style="align-items:start">
+    <div>
+      <h2>Around Delta Shores</h2>
+      <ul class="res-list">
+        {% for p in site.places %}
+        <li><a href="{{ p.url }}" rel="noopener">{{ p.name }}</a><span>{{ p.note }}</span></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div>
+      <h2>Supporting Businesses</h2>
+      <ul class="res-list">
+        {% for s in site.supporters %}
+        <li><a href="{{ s.url }}" rel="noopener">{{ s.name }}</a><span>{{ host(s.url) }}</span></li>
+        {% endfor %}
+      </ul>
+      <p class="muted" style="margin-top:20px">Own a local business? <a href="/blog/business-spotlight">Learn about the Business Spotlight</a>.</p>
+    </div>
+  </div>
+</section>
 {% endblock %}

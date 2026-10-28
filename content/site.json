@@ -102,5 +102,89 @@
     "Youth/Family Activities",
     "Community Communications and Newsletter",
     "Other"
+  ],
+  "builders": [
+    {
+      "name": "Signature Homes",
+      "url": "https://sighomes.com/delta-shores/",
+      "communities": [
+        {
+          "name": "Coronado",
+          "url": ""
+        },
+        {
+          "name": "Catalina",
+          "url": "https://sighomes.com/catalina/"
+        },
+        {
+          "name": "Avalon",
+          "url": ""
+        },
+        {
+          "name": "Balboa",
+          "url": "https://sighomes.com/balboa/"
+        }
+      ]
+    },
+    {
+      "name": "KB Home",
+      "url": "https://www.kbhome.com/new-homes-sacramento",
+      "communities": [
+        {
+          "name": "Riva",
+          "url": "https://www.kbhome.com/new-homes-sacramento/riva-at-delta-shores"
+        },
+        {
+          "name": "Edgewater",
+          "url": ""
+        }
+      ]
+    },
+    {
+      "name": "Meritage Homes",
+      "url": "https://www.meritagehomes.com/state/ca/sacramento",
+      "communities": [
+        {
+          "name": "Dockside",
+          "url": "https://www.meritagehomes.com/state/ca/sacramento/dockside-at-delta-shores"
+        }
+      ]
+    },
+    {
+      "name": "D.R. Horton",
+      "url": "https://www.drhorton.com/california/sacramento",
+      "communities": [
+        {
+          "name": "Ibiza",
+          "url": "https://www.drhorton.com/california/sacramento/sacramento/ibiza"
+        }
+      ]
+    }
+  ],
+  "places": [
+    {
+      "name": "Delta Shores Shopping Center",
+      "url": "https://www.shopdeltashores.com/",
+      "note": "Shopping, dining, and services"
+    },
+    {
+      "name": "Delta Shores Apartments by Russell Square",
+      "url": "https://russellsquareinc.com/portfolio/delta-shores/",
+      "note": "Apartment homes"
+    }
+  ],
+  "supporters": [
+    {
+      "name": "Casa Flores",
+      "url": "http://casafloresrestaurants.com/"
+    },
+    {
+      "name": "Fire Taproom",
+      "url": "https://www.firetaproom.com/"
+    },
+    {
+      "name": "Island Fin Poke",
+      "url": "https://www.islandfinpoke.com/locations/"
+    }
   ]
 }
