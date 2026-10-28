@@ -142,3 +142,30 @@ function testSenderConnection() {
   Logger.log('Groups: ' + list.map(function (g) { return g.title; }).join(', '));
   Logger.log('Website group found: ' + (senderGroupId_(token) ? 'yes' : 'NO — create a group named "' + SENDER_GROUP_NAME + '"'));
 }
+
+/** Logs the website settings again for an existing form (safe to re-run). */
+function showDscaConfig() {
+  var form = FormApp.openById(PropertiesService.getScriptProperties().getProperty('FORM_ID'));
+  var r = form.createResponse();
+  var titles = [];
+  form.getItems().forEach(function (it) {
+    var t = it.getType(), item;
+    if (t === FormApp.ItemType.TEXT) { item = it.asTextItem(); r.withItemResponse(item.createResponse(it.getTitle() === 'Email' ? 'x@example.com' : 'x')); }
+    else if (t === FormApp.ItemType.PARAGRAPH_TEXT) { item = it.asParagraphTextItem(); r.withItemResponse(item.createResponse('x')); }
+    else if (t === FormApp.ItemType.LIST) { item = it.asListItem(); r.withItemResponse(item.createResponse(item.getChoices()[0].getValue())); }
+    else if (t === FormApp.ItemType.CHECKBOX) { item = it.asCheckboxItem(); r.withItemResponse(item.createResponse([item.getChoices()[0].getValue()])); }
+    else if (t === FormApp.ItemType.MULTIPLE_CHOICE) { item = it.asMultipleChoiceItem(); r.withItemResponse(item.createResponse(item.getChoices()[0].getValue())); }
+    else return;
+    titles.push(it.getTitle());
+  });
+  var ids = r.toPrefilledUrl().match(/entry\.\d+/g) || [];
+  var map = {};
+  titles.forEach(function (t, i) { map[t] = ids[i]; });
+  var sheetId = form.getDestinationId();
+  Logger.log('DSCA_CONFIG ' + JSON.stringify({
+    contact_form_action: form.getPublishedUrl().replace(/\/viewform.*$/, '/formResponse'),
+    by_title: map,
+    triggers: ScriptApp.getProjectTriggers().map(function (t) { return t.getHandlerFunction(); }),
+    sheet_url: sheetId ? SpreadsheetApp.openById(sheetId).getUrl() : null
+  }));
+}

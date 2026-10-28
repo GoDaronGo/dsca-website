@@ -48,20 +48,20 @@
   "integrations": {
     "_note": "Fill these in once the free accounts exist. Leave a value empty to show the 'not connected yet' fallback.",
     "zeffy_donation_form_url": "https://www.zeffy.com/embed/donation-form/support-delta-shores-community",
-    "contact_form_action": "",
+    "contact_form_action": "https://docs.google.com/forms/d/e/1FAIpQLScVmfFtk7qoYktc6ws7phrU55YTNkv9npJrNFMEX-3GCDnedg/formResponse",
     "contact_form_fields": {
-      "_note": "Google Form entry IDs (entry.123456789) for each field, once the Google Form is created.",
-      "first_name": "",
-      "last_name": "",
-      "email": "",
-      "phone": "",
-      "address": "",
-      "community": "",
-      "initiatives": "",
-      "group_chat": "",
-      "block_watch": "",
-      "comments": "",
-      "source": ""
+      "_note": "Google Form entry IDs. Form and response sheet live in the DSCA Google Drive; each submission is also added to Sender (group: Website Sign-ups).",
+      "first_name": "entry.1629081220",
+      "last_name": "entry.1665489518",
+      "email": "entry.1212486546",
+      "phone": "entry.386862932",
+      "address": "entry.96355200",
+      "community": "entry.1876180935",
+      "initiatives": "entry.2105939777",
+      "group_chat": "entry.1812563728",
+      "block_watch": "entry.2077848410",
+      "comments": "entry.1435662891",
+      "source": "entry.1428363974"
     }
   },
   "board": [
