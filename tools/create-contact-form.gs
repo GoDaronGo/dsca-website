@@ -251,3 +251,91 @@ function importExistingContacts() {
   if (skipped.length) Logger.log('Skipped: ' + skipped.join('; '));
   if (failed.length) Logger.log('Failed: ' + failed.join('; '));
 }
+
+/**
+ * One-time copy of the old Squarespace sign-ups (Website Submissions > Raw_Data
+ * and Website tabs) into the form's response spreadsheet:
+ *   - "Imported (old website)": old rows mapped to the form's columns, deduped by email
+ *   - "All Contacts": a live, newest-first list stacking new form responses + imported rows
+ * Safe to re-run (rebuilds both tabs). Does not touch Sender or send any email.
+ */
+var OLD_TABS = ['Raw_Data', 'Website'];
+var IMPORT_TAB = 'Imported (old website)';
+var ALL_TAB = 'All Contacts';
+
+function copyOldSubmissionsToResponseSheet() {
+  var form = FormApp.openById(PropertiesService.getScriptProperties().getProperty('FORM_ID'));
+  var ss = SpreadsheetApp.openById(form.getDestinationId());
+  var resp = ss.getSheets().filter(function (s) { return s.getFormUrl(); })[0];
+  if (!resp) throw new Error('No form-linked responses tab found.');
+  var head = resp.getRange(1, 1, 1, resp.getLastColumn()).getValues()[0].map(String);
+  var cols = head.concat(['Import note']);
+
+  // Read and merge the old tabs (newest value wins, blanks never overwrite).
+  var people = {}, order = [];
+  var old = SpreadsheetApp.openById(IMPORT_SHEET_ID);
+  OLD_TABS.forEach(function (tab) {
+    var sh = old.getSheetByName(tab);
+    if (!sh) return;
+    var vals = sh.getDataRange().getValues();
+    var hr = vals.findIndex(function (r) { return r.map(String).indexOf('Email') >= 0; });
+    if (hr < 0) return;
+    var h = vals[hr].map(function (x) { return String(x).trim(); });
+    vals.slice(hr + 1).forEach(function (r) {
+      var g = function (name) { var i = h.indexOf(name); return i < 0 ? '' : r[i]; };
+      var name = String(g('Name')).trim();
+      var email = String(g('Email')).trim();
+      if (!name && !email) return;
+      var validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      var lower = email.toLowerCase();
+      if (IMPORT_SKIP.indexOf(lower) >= 0) return;
+      if (!validEmail && name.toLowerCase() === 'daron go') return; // old test row
+      var key = validEmail ? lower : 'name:' + name.toLowerCase();
+      var ts = g('Submitted On');
+      if (!(ts instanceof Date)) { var d = new Date(String(ts)); ts = isNaN(d) ? '' : d; }
+      var digits = String(g('Phone')).replace(/\D/g, '');
+      var phone = digits.length === 10 ? '(' + digits.slice(0, 3) + ') ' + digits.slice(3, 6) + '-' + digits.slice(6) : '';
+      var parts = name.split(/\s+/);
+      var extra = [g('Please tell us why youre interested in our community'), g('What other initiatives are you interested in'), g('Comments')]
+        .map(function (x) { return String(x).trim(); }).filter(Boolean).join(' | ');
+      var rec = {
+        'Timestamp': ts, 'First name': parts.shift() || '', 'Last name': parts.join(' '),
+        'Email': validEmail ? lower : '', 'Phone': phone,
+        'Street address': String(g('Address')).replace(/,\s*United States\s*$/, '').trim(),
+        'Community': String(g('Community')).trim(), 'Initiatives': String(g('Initiatives')).trim(),
+        'Group Chat': String(g('Group Chat')).trim(), 'Block Watch': String(g('Block Watch')).trim(),
+        'Comments': extra, 'Source': 'Old website (Squarespace)',
+        'Import note': validEmail ? '' : 'No valid email on old form (entered: "' + email + '")'
+      };
+      if (!people[key]) { people[key] = rec; order.push(key); return; }
+      var cur = people[key], newer = ts && (!cur.Timestamp || ts > cur.Timestamp);
+      Object.keys(rec).forEach(function (k) {
+        if (rec[k] === '' || rec[k] === null) return;
+        if (cur[k] === '' || cur[k] === null || newer) cur[k] = rec[k];
+      });
+    });
+  });
+
+  var rows = order.map(function (k) { var p = people[k]; return cols.map(function (c) { return p[c] === undefined ? '' : p[c]; }); });
+  rows.sort(function (a, b) { return (b[0] || 0) - (a[0] || 0); });
+
+  var imp = ss.getSheetByName(IMPORT_TAB) || ss.insertSheet(IMPORT_TAB);
+  imp.clear();
+  imp.getRange(1, 1, 1, cols.length).setValues([cols]).setFontWeight('bold');
+  if (rows.length) imp.getRange(2, 1, rows.length, cols.length).setValues(rows);
+  imp.getRange('A:A').setNumberFormat('m/d/yyyy h:mm');
+  imp.setFrozenRows(1);
+
+  // Live combined list: form responses + imported, newest first.
+  var last = String.fromCharCode(64 + head.length); // head is < 26 columns
+  var fr = "'" + resp.getName() + "'", im = "'" + IMPORT_TAB + "'";
+  var all = ss.getSheetByName(ALL_TAB) || ss.insertSheet(ALL_TAB, 0);
+  all.clear();
+  all.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight('bold');
+  all.getRange('A2').setFormula('=SORT(VSTACK(FILTER(' + fr + '!A2:' + last + ',' + fr + '!A2:A<>""),FILTER(' + im + '!A2:' + last + ',' + im + '!B2:B<>"")),1,FALSE)');
+  all.getRange('A:A').setNumberFormat('m/d/yyyy h:mm');
+  all.setFrozenRows(1);
+
+  var noEmail = rows.filter(function (r) { return r[cols.length - 1]; }).length;
+  Logger.log('COPIED imported=' + rows.length + ' flagged_no_email=' + noEmail + ' sheet=' + ss.getUrl());
+}
