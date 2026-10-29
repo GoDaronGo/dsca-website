@@ -84,7 +84,53 @@ function installTrigger_(form) {
 function onDscaFormSubmit(e) {
   var a = {};
   e.response.getItemResponses().forEach(function (ir) { a[ir.getItem().getTitle()] = ir.getResponse(); });
-  addToSender_(a);
+  var errors = [];
+  try { notifyWhatsApp_(a); } catch (err) { errors.push('WhatsApp notice: ' + err); }
+  try { addToSender_(a); } catch (err) { errors.push(String(err)); }
+  if (errors.length) throw new Error(errors.join(' | '));
+}
+
+/** Emails Daron the details (plus a contact card) when someone asks to join WhatsApp. */
+var NOTIFY_EMAIL = 'daron@deltashorescommunity.com';
+
+function notifyWhatsApp_(a) {
+  if (!/^yes/i.test(String(a['Group Chat'] || ''))) return;
+  var first = String(a['First name'] || '').trim(), last = String(a['Last name'] || '').trim();
+  var name = (first + ' ' + last).trim();
+  var phone = String(a['Phone'] || '').trim(), email = String(a['Email'] || '').trim();
+  var address = String(a['Street address'] || '').trim(), community = String(a['Community'] || '').trim();
+  var body = [
+    'A new website sign-up asked to join the WhatsApp group.', '',
+    'Name: ' + name,
+    'Phone: ' + (phone || '(not given)'),
+    'Email: ' + email,
+    'Address: ' + (address || '(not given)'),
+    'Community: ' + (community || '(not given)'), '',
+    'The attached contact card can be opened on your phone to save them to your contacts.'
+  ].join('\n');
+  var esc = function (s) { return String(s).replace(/([\\;,])/g, '\\$1'); };
+  var vcf = ['BEGIN:VCARD', 'VERSION:3.0',
+    'N:' + esc(last) + ';' + esc(first) + ';;;', 'FN:' + esc(name),
+    phone ? 'TEL;TYPE=CELL:' + phone : '', 'EMAIL:' + esc(email),
+    address ? 'ADR;TYPE=HOME:;;' + esc(address) + ';;;;' : '',
+    'ORG:Delta Shores' + (community ? ' - ' + esc(community) : ''),
+    'END:VCARD'].filter(String).join('\r\n');
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: 'Add to WhatsApp: ' + name,
+    body: body,
+    attachments: [Utilities.newBlob(vcf, 'text/vcard', (name.replace(/[^\w ]/g, '') || 'contact') + '.vcf')]
+  });
+}
+
+/** Sends a sample WhatsApp notice to NOTIFY_EMAIL (also grants email permission). */
+function testWhatsAppNotice() {
+  notifyWhatsApp_({
+    'Group Chat': 'Yes, please add me to the WhatsApp Chat Group.',
+    'First name': 'Sample', 'Last name': 'Neighbor', 'Phone': '(916) 555-0100',
+    'Email': 'sample@example.com', 'Street address': '123 Example Way, Sacramento, CA 95832',
+    'Community': 'Coronado'
+  });
 }
 
 function senderFetch_(token, path, options) {
