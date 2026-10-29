@@ -12,6 +12,9 @@
 var SENDER_GROUP_NAME = 'Website Sign-ups';
 
 function createDscaContactForm() {
+  if (PropertiesService.getScriptProperties().getProperty('FORM_ID')) {
+    throw new Error('A form already exists (FORM_ID is set). Not creating another one.');
+  }
   var communities = ['Coronado', 'Catalina', 'Avalon', 'Balboa', 'Edgewater', 'Riva', 'Dockside', 'Ibiza', 'Other/Not Applicable'];
   var initiatives = ['Neighborhood Block Party', 'Parks and Beautification Projects', 'Community Meetings', 'Youth/Family Activities', 'Community Communications and Newsletter', 'Other'];
   var chatYes = 'Yes, please add me to the WhatsApp Chat Group.';
@@ -338,4 +341,22 @@ function copyOldSubmissionsToResponseSheet() {
 
   var noEmail = rows.filter(function (r) { return r[cols.length - 1]; }).length;
   Logger.log('COPIED imported=' + rows.length + ' flagged_no_email=' + noEmail + ' sheet=' + ss.getUrl());
+}
+
+/**
+ * Re-points the script at the live website form (the one deltashorescommunity.com
+ * posts to), reinstalls its on-submit trigger, then rebuilds the contact tabs.
+ */
+var LIVE_FORM_ID = '1_NElptlC1UpTkYmRD_rDYHYMXrQm_UC8ed6uFL8-qrc';
+var LIVE_PUBLISHED_ID = '1FAIpQLScVmfFtk7qoYktc6ws7phrU55YTNkv9npJrNFMEX-3GCDnedg';
+var STRAY_FORM_ID = '1fhu48uL-gCQyxesmQz5a5oyclRHp3mqDz7I6hWjQsss';
+
+function repairLiveFormLink() {
+  var live = FormApp.openById(LIVE_FORM_ID);
+  if (live.getPublishedUrl().indexOf(LIVE_PUBLISHED_ID) < 0) throw new Error('Form ' + LIVE_FORM_ID + ' is not the live website form.');
+  PropertiesService.getScriptProperties().setProperty('FORM_ID', LIVE_FORM_ID);
+  installTrigger_(live);
+  try { var stray = FormApp.openById(STRAY_FORM_ID); stray.setAcceptingResponses(false); } catch (e) { Logger.log('stray form: ' + e); }
+  Logger.log('REPAIRED form=' + live.getTitle() + ' triggers=' + ScriptApp.getProjectTriggers().map(function (t) { return t.getHandlerFunction() + ':' + t.getTriggerSourceId(); }).join(','));
+  copyOldSubmissionsToResponseSheet();
 }
