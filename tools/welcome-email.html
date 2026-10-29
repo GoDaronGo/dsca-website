@@ -18,7 +18,7 @@
         <tr>
           <td style="padding:16px 32px 8px; font-family:Arial, Helvetica, sans-serif; color:#142640; font-size:16px; line-height:1.6;">
             <h1 style="margin:0 0 16px; font-size:24px; line-height:1.25; color:#142640;">Welcome to the neighborhood!</h1>
-            <p style="margin:0 0 14px;">Hi {$firstname},</p>
+            <p style="margin:0 0 14px;">Hi {{ firstname | default: "neighbor" }},</p>
             <p style="margin:0 0 14px;">Thanks for joining the Delta Shores Community Association! You'll now be among the first to hear about block parties, community meetings, and news about parks, new businesses, and development in Delta Shores.</p>
             <p style="margin:0 0 8px;"><strong>What's coming up:</strong> See upcoming events at <a href="https://www.deltashorescommunity.com/events" style="color:#2457c5;">deltashorescommunity.com/events</a></p>
             <p style="margin:0 0 14px;"><strong>Get involved:</strong> Volunteer or donate at <a href="https://www.deltashorescommunity.com/take-action" style="color:#2457c5;">deltashorescommunity.com/take-action</a></p>
