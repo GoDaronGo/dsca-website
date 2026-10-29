@@ -33,6 +33,8 @@ flowchart LR
 | Apps Script | daron@ | 1bvN9a6PpoF2IIyimst3vpOKtQuAjVE23Mi15lJIQ0QuD2OVhguEVkIJx; Script Properties SENDER_TOKEN, FORM_ID, SENDER_GROUP_ID; trigger onDscaFormSubmit | free |
 | Sender.net (Free) | daron@ | group Website Sign-ups; automation Website Sign-up Welcome (builder e317kQ); domain verified | 2,500 subs, 15,000 emails/mo, Sender footer |
 | Zeffy | daron@ | form support-delta-shores-community; bank linked | free |
+| Google Analytics 4 | godaron9@gmail.com | account 412947068, property dsca-2aa51 (560129606), web stream "DSCA Website" G-RJ6VRHM49B; site.json ga_measurement_id | free |
+| Google Search Console | godaron9@gmail.com | URL-prefix property https://www.deltashorescommunity.com/; verified by old HTML file + GA tag; sitemap.xml submitted 2026-10-29 (37 pages) | free |
 | Old sheet (retired) | daron@ | Website Submissions 1OR66QbnmUcNojCybRgWJe039ps8ZSM3uX5gYs2DrXvs | keep as archive |
 
 ## DNS (Squarespace)
@@ -62,3 +64,7 @@ flowchart LR
 Back up Squarespace mailing list (with unsubscribes) and site export; disconnect Squarespace form->Drive;
 cancel Squarespace Email Campaigns ($12/mo) and website plan ($25/mo) keeping the domain; verify DNS after;
 delete Sender draft "Welcome (Ecommerce)" automation and unused "DSCA Website Mailing List" form.
+
+## SEO
+
+Canonical tag on every page (build.py sets `canonical`), NGO schema.org JSON-LD on the home page, /privacy page (GA section appears when ga_measurement_id is set), sitemap.xml + robots.txt. site.json `google_site_verification` slot exists but is unused (GA verifies Search Console; keep the GA tag or Search Console may lose verification).
