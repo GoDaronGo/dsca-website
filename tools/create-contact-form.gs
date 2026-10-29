@@ -83,58 +83,8 @@ function installTrigger_(form) {
   ScriptApp.newTrigger('onDscaFormSubmit').forForm(form).onFormSubmit().create();
 }
 
-/** Runs automatically on every form submission. */
-function onDscaFormSubmit(e) {
-  var a = {};
-  e.response.getItemResponses().forEach(function (ir) { a[ir.getItem().getTitle()] = ir.getResponse(); });
-  var errors = [];
-  try { notifyWhatsApp_(a); } catch (err) { errors.push('WhatsApp notice: ' + err); }
-  try { addToSender_(a); } catch (err) { errors.push(String(err)); }
-  if (errors.length) throw new Error(errors.join(' | '));
-}
-
-/** Emails Daron the details (plus a contact card) when someone asks to join WhatsApp. */
+/** Form submissions are handled by onDscaFormSubmit in contact-intake.gs (same pipeline as the website). */
 var NOTIFY_EMAIL = 'daron@deltashorescommunity.com';
-
-function notifyWhatsApp_(a) {
-  if (!/^yes/i.test(String(a['Group Chat'] || ''))) return;
-  var first = String(a['First name'] || '').trim(), last = String(a['Last name'] || '').trim();
-  var name = (first + ' ' + last).trim();
-  var phone = String(a['Phone'] || '').trim(), email = String(a['Email'] || '').trim();
-  var address = String(a['Street address'] || '').trim(), community = String(a['Community'] || '').trim();
-  var body = [
-    'A new website sign-up asked to join the WhatsApp group.', '',
-    'Name: ' + name,
-    'Phone: ' + (phone || '(not given)'),
-    'Email: ' + email,
-    'Address: ' + (address || '(not given)'),
-    'Community: ' + (community || '(not given)'), '',
-    'The attached contact card can be opened on your phone to save them to your contacts.'
-  ].join('\n');
-  var esc = function (s) { return String(s).replace(/([\\;,])/g, '\\$1'); };
-  var vcf = ['BEGIN:VCARD', 'VERSION:3.0',
-    'N:' + esc(last) + ';' + esc(first) + ';;;', 'FN:' + esc(name),
-    phone ? 'TEL;TYPE=CELL:' + phone : '', 'EMAIL:' + esc(email),
-    address ? 'ADR;TYPE=HOME:;;' + esc(address) + ';;;;' : '',
-    'ORG:Delta Shores' + (community ? ' - ' + esc(community) : ''),
-    'END:VCARD'].filter(String).join('\r\n');
-  MailApp.sendEmail({
-    to: NOTIFY_EMAIL,
-    subject: 'Add to WhatsApp: ' + name,
-    body: body,
-    attachments: [Utilities.newBlob(vcf, 'text/vcard', (name.replace(/[^\w ]/g, '') || 'contact') + '.vcf')]
-  });
-}
-
-/** Sends a sample WhatsApp notice to NOTIFY_EMAIL (also grants email permission). */
-function testWhatsAppNotice() {
-  notifyWhatsApp_({
-    'Group Chat': 'Yes, please add me to the WhatsApp Chat Group.',
-    'First name': 'Sample', 'Last name': 'Neighbor', 'Phone': '(916) 555-0100',
-    'Email': 'sample@example.com', 'Street address': '123 Example Way, Sacramento, CA 95832',
-    'Community': 'Coronado'
-  });
-}
 
 function senderFetch_(token, path, options) {
   options = options || {};
@@ -159,27 +109,6 @@ function senderGroupId_(token) {
     if (list[i].title === SENDER_GROUP_NAME) { props.setProperty('SENDER_GROUP_ID', list[i].id); return list[i].id; }
   }
   return null;
-}
-
-function addToSender_(a) {
-  var token = senderToken_();
-  var payload = {
-    email: String(a['Email'] || '').trim(),
-    firstname: a['First name'] || '',
-    lastname: a['Last name'] || ''
-  };
-  var groupId = senderGroupId_(token);
-  if (groupId) payload.groups = [groupId];
-  var digits = String(a['Phone'] || '').replace(/\D/g, '');
-  if (digits.length === 10) payload.phone = '+1' + digits;
-  else if (digits.length === 11 && digits.charAt(0) === '1') payload.phone = '+' + digits;
-  var res = senderFetch_(token, '/subscribers', {
-    method: 'post', contentType: 'application/json', payload: JSON.stringify(payload)
-  });
-  Logger.log('Sender ' + res.getResponseCode() + ' ' + res.getContentText().slice(0, 300));
-  if (res.getResponseCode() >= 300) {
-    throw new Error('Sender did not accept ' + payload.email + ' (' + res.getResponseCode() + '): ' + res.getContentText().slice(0, 300));
-  }
 }
 
 /** Run this after saving SENDER_TOKEN to confirm the connection. */
@@ -259,7 +188,6 @@ function importExistingContacts() {
  * One-time copy of the old Squarespace sign-ups (Website Submissions > Raw_Data
  * and Website tabs) into the form's response spreadsheet:
  *   - "Imported (old website)": old rows mapped to the form's columns, deduped by email
- *   - "All Contacts": a live, newest-first list stacking new form responses + imported rows
  * Safe to re-run (rebuilds both tabs). Does not touch Sender or send any email.
  */
 var OLD_TABS = ['Raw_Data', 'Website'];
@@ -329,15 +257,7 @@ function copyOldSubmissionsToResponseSheet() {
   imp.getRange('A:A').setNumberFormat('m/d/yyyy h:mm');
   imp.setFrozenRows(1);
 
-  // Live combined list: form responses + imported, newest first.
-  var last = String.fromCharCode(64 + head.length); // head is < 26 columns
-  var fr = "'" + resp.getName() + "'", im = "'" + IMPORT_TAB + "'";
-  var all = ss.getSheetByName(ALL_TAB) || ss.insertSheet(ALL_TAB, 0);
-  all.clear();
-  all.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight('bold');
-  all.getRange('A2').setFormula('=SORT(VSTACK(FILTER(' + fr + '!A2:' + last + ',' + fr + '!A2:A<>""),FILTER(' + im + '!A2:' + last + ',' + im + '!B2:B<>"")),1,FALSE)');
-  all.getRange('A:A').setNumberFormat('m/d/yyyy h:mm');
-  all.setFrozenRows(1);
+  // All Contacts is now one row per email, maintained by contact-intake.gs (run rebuildAllContacts()).
 
   var noEmail = rows.filter(function (r) { return r[cols.length - 1]; }).length;
   Logger.log('COPIED imported=' + rows.length + ' flagged_no_email=' + noEmail + ' sheet=' + ss.getUrl());
