@@ -169,3 +169,39 @@ function showDscaConfig() {
     sheet_url: sheetId ? SpreadsheetApp.openById(sheetId).getUrl() : null
   }));
 }
+
+/**
+ * One-time import of the existing Squarespace sign-ups (Website Submissions >
+ * Raw_Data) into Sender. Skips invalid emails, duplicates and test entries,
+ * and does NOT trigger automations (so no welcome email goes to existing people).
+ */
+var IMPORT_SHEET_ID = '1OR66QbnmUcNojCybRgWJe039ps8ZSM3uX5gYs2DrXvs';
+var IMPORT_SKIP = ['godaron9+3@gmail.com'];
+
+function importExistingContacts() {
+  var token = senderToken_();
+  var groupId = senderGroupId_(token);
+  if (!groupId) throw new Error('Sender group "' + SENDER_GROUP_NAME + '" not found.');
+  var rows = SpreadsheetApp.openById(IMPORT_SHEET_ID).getSheetByName('Raw_Data').getDataRange().getDisplayValues();
+  var head = rows.shift().map(function (h) { return String(h).trim(); });
+  var col = function (name) { return head.indexOf(name); };
+  var cName = col('Name'), cEmail = col('Email'), cPhone = col('Phone');
+  var seen = {}, added = 0, skipped = [], failed = [];
+  rows.forEach(function (r) {
+    var email = String(r[cEmail] || '').trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { if (String(r[cName]).trim()) skipped.push(r[cName] + ' (no valid email)'); return; }
+    if (seen[email] || IMPORT_SKIP.indexOf(email) >= 0) return;
+    seen[email] = true;
+    var parts = String(r[cName] || '').trim().split(/\s+/);
+    var payload = { email: email, firstname: parts.shift() || '', lastname: parts.join(' '), groups: [groupId], trigger_automation: false };
+    var digits = String(r[cPhone] || '').replace(/\D/g, '');
+    if (digits.length === 10) payload.phone = '+1' + digits;
+    var res = senderFetch_(token, '/subscribers', { method: 'post', contentType: 'application/json', payload: JSON.stringify(payload) });
+    if (res.getResponseCode() < 300) added++;
+    else failed.push(email + ' (' + res.getResponseCode() + ': ' + res.getContentText().slice(0, 120) + ')');
+    Utilities.sleep(250);
+  });
+  Logger.log('IMPORT added=' + added + ' failed=' + failed.length + ' skipped=' + skipped.length);
+  if (skipped.length) Logger.log('Skipped: ' + skipped.join('; '));
+  if (failed.length) Logger.log('Failed: ' + failed.join('; '));
+}
