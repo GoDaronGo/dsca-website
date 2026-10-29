@@ -113,6 +113,8 @@ def build():
     def render(tpl, dest, **ctx):
         path = OUT / dest
         path.parent.mkdir(parents=True, exist_ok=True)
+        rel = "/" if dest == "index.html" else "/" + dest.removesuffix(".html")
+        ctx.setdefault("canonical", "" if dest == "404.html" else site["url"] + rel)
         path.write_text(env.get_template(tpl).render(**g, **ctx), encoding="utf-8")
 
     for page in sorted((TEMPLATES / "pages").glob("*.html")):

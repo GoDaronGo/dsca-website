@@ -10,6 +10,22 @@
 <meta property="og:description" content="{{ description or site.tagline }}">
 <meta property="og:image" content="{{ site.url }}{{ og_image or '/img/hero.webp' }}">
 <meta property="og:type" content="website">
+{% if canonical %}<link rel="canonical" href="{{ canonical }}">
+<meta property="og:url" content="{{ canonical }}">{% endif %}
+{% if site.integrations.google_site_verification %}<meta name="google-site-verification" content="{{ site.integrations.google_site_verification }}">{% endif %}
+{% if page == 'home' %}<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  "name": site.name,
+  "alternateName": site.short_name,
+  "url": site.url ~ "/",
+  "logo": site.url ~ "/img/email-logo.png",
+  "email": site.email,
+  "address": {"@type": "PostalAddress", "addressLocality": "Sacramento", "addressRegion": "CA", "postalCode": "95832", "addressCountry": "US"},
+  "sameAs": site.social | map(attribute='href') | list
+} | tojson }}</script>{% endif %}
+{% if site.integrations.ga_measurement_id %}<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.integrations.ga_measurement_id }}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.integrations.ga_measurement_id }}');</script>{% endif %}
 <link rel="icon" href="/img/favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,7 +91,7 @@
   </div>
   <div class="wrap foot-bottom">
     <p style="margin:0">© {{ site.year }} {{ site.name }}</p>
-    <ul><li><a href="/disclaimer">Legal Disclaimer</a></li><li><a href="/bylaws.pdf">By-Laws (PDF)</a></li></ul>
+    <ul><li><a href="/privacy">Privacy</a></li><li><a href="/disclaimer">Legal Disclaimer</a></li><li><a href="/bylaws.pdf">By-Laws (PDF)</a></li></ul>
   </div>
 </footer>
 <script>

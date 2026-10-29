@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% set title = "Privacy" %}
+{% set description = "How the Delta Shores Community Association handles the information you share with us." %}
+{% block main %}
+<div class="wrap page-head"><h1>Privacy</h1></div>
+<div class="wrap prose" style="padding-bottom:72px">
+  <p>We only collect what we need to keep neighbors informed, and we never sell or share your information with advertisers.</p>
+  <h2>When you sign up</h2>
+  <p>Our sign-up form asks for your name, email, and optionally your phone, street address, community, and interests. We keep this in the association's Google Workspace account and in our email service (Sender) so we can send community updates and, if you ask, add you to our WhatsApp group. Every email includes an unsubscribe link.</p>
+  <h2>Donations</h2>
+  <p>Donations are processed by Zeffy. Your payment details go to Zeffy, not to us.</p>
+  {% if site.integrations.ga_measurement_id %}
+  <h2>Website statistics</h2>
+  <p>We use Google Analytics to count visits and see which pages are most useful. It uses cookies and collects information such as pages viewed, approximate location, and device type. We don't use it to identify you. You can opt out with your browser's privacy settings or the <a href="https://tools.google.com/dlpage/gaoptout" rel="noopener">Google Analytics opt-out add-on</a>.</p>
+  {% endif %}
+  <h2>Questions or removal</h2>
+  <p>To update or remove your information, email <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+</div>
+{% endblock %}
