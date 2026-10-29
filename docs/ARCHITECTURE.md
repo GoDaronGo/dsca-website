@@ -1,6 +1,6 @@
 # DSCA website: architecture and operations
 
-As of 2026-10-29. Full illustrated guide (Claude Doc): https://claude.ai/artifact/J6V85xQRCb4bWnRf7NqMEg
+As of 2026-10-29 (contact form moved off Google Forms the same day). Full illustrated guide (Claude Doc): https://claude.ai/artifact/J6V85xQRCb4bWnRf7NqMEg
 
 The website runs entirely on cloud services. It does NOT use Daron's home PC
 (godarondesk), Tailscale or Cloudflare Tunnel; those belong to his personal home dashboard.
@@ -61,6 +61,8 @@ flowchart LR
 - Sender group add/remove takes a few seconds to register; back-to-back remove+add silently skips the add. Pause ~5 s between steps (SENDER_PAUSE_MS).
 - Leaving and rejoining a group re-fires a "joins group" automation only when Repeat workflow is ON.
 - Website form: the page reads doPost's JSON reply (no preflight: body sent as text/plain). Contact merge rules: blanks never overwrite, Initiatives replace, Comments are a dated history (newest first), Updates counts resubmissions.
+- Editing ContactIntake.gs: the web app (doPost) runs the DEPLOYED version. After changing intake/merge code, Deploy > Manage deployments > edit > New version (same URL). processQueue and manual runs use the saved code immediately.
+- Form.setCustomClosedFormMessage throws "Invalid data updating form"; the form is closed with setAcceptingResponses(false) only.
 - `.btn` sets display, so `hidden` needs an explicit `[hidden]{display:none}` rule.
 - Sender Liquid: `{{ firstname | default: "neighbor" }}`; unsubscribe still `{$unsubscribe_link}`.
 - Claude can't: click Send/Activate in Sender, edit Squarespace DNS, enter tokens/bank info. Daron does those.

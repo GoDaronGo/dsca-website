@@ -457,8 +457,7 @@ function fromSheetRow_(o, source) {
 function closeGoogleForm() {
   var form = FormApp.openById(PropertiesService.getScriptProperties().getProperty('FORM_ID'));
   form.setAcceptingResponses(false);
-  form.setCustomClosedFormMessage('This form has moved. Please use https://www.deltashorescommunity.com/contact');
-  Logger.log('Form closed: ' + form.getTitle());
+  Logger.log('Form ' + form.getTitle() + ' accepting responses: ' + form.isAcceptingResponses());
 }
 
 /* ------------------------------------------------------------------ helpers */
