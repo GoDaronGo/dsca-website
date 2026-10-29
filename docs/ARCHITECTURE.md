@@ -12,10 +12,11 @@ flowchart LR
   gha --> fb[Firebase Hosting dsca-2aa51]
   visitors[Visitors] --> dns[Squarespace DNS] --> fb
   fb -- /donate embeds --> zeffy[Zeffy]
-  fb -- /contact posts --> form[Google Form]
-  form --> sheet[Sheet: DSCA Contact Form Responses]
-  form -- onFormSubmit --> gas[Apps Script DSCA Contact Form]
-  gas --> sender[Sender.net group Website Sign-ups]
+  fb -- /contact POSTs JSON --> gas[Apps Script web app: ContactIntake.gs doPost]
+  gas --> sheet[Sheet: raw log + All Contacts, one row per email]
+  gas -- processQueue every minute --> sender[Sender.net]
+  sender -- new --> welcome2[Website Sign-ups group: Welcome automation]
+  sender -- existing --> upd[Updated Submission group: update automation, Repeat on]
   gas --> mail[Email to daron@ with WhatsApp vCard]
   sender --> welcome[Automation: Website Sign-up Welcome]
 ```
@@ -28,10 +29,10 @@ flowchart LR
 | Firebase Hosting (Spark) | godaron9@gmail.com | project dsca-2aa51; SA github-deploy (Firebase Hosting Admin + Service Usage Consumer) | 10 GB storage, 360 MB/day transfer |
 | Squarespace Domains | Squarespace login | deltashorescommunity.com, expires 2027-11-02 | paid yearly |
 | Google Workspace (nonprofit) | daron@deltashorescommunity.com | daron@, info@, junior@, monserrat@ | free |
-| Google Form | daron@ | 1_NElptlC1UpTkYmRD_rDYHYMXrQm_UC8ed6uFL8-qrc (published 1FAIpQLScVmfFtk7qoYktc6ws7phrU55YTNkv9npJrNFMEX-3GCDnedg) | free |
-| Response sheet | daron@ | 1lufYhdb2fMekOZ1ni7uPiLgKxr0iiHDvTjbqzjJz8D4 (tabs: All Contacts, Form Responses 1, Imported (old website)) | free |
-| Apps Script | daron@ | 1bvN9a6PpoF2IIyimst3vpOKtQuAjVE23Mi15lJIQ0QuD2OVhguEVkIJx; Script Properties SENDER_TOKEN, FORM_ID, SENDER_GROUP_ID; trigger onDscaFormSubmit | free |
-| Sender.net (Free) | daron@ | group Website Sign-ups; automation Website Sign-up Welcome (builder e317kQ); domain verified | 2,500 subs, 15,000 emails/mo, Sender footer |
+| Google Form (retired) | daron@ | 1_NElptlC1UpTkYmRD_rDYHYMXrQm_UC8ed6uFL8-qrc (published 1FAIpQLScVmfFtk7qoYktc6ws7phrU55YTNkv9npJrNFMEX-3GCDnedg) | free |
+| Response sheet | daron@ | 1lufYhdb2fMekOZ1ni7uPiLgKxr0iiHDvTjbqzjJz8D4 (tabs: All Contacts = one row per email, Website Submissions (raw), Form Responses 1 = archive, Imported (old website)) | free |
+| Apps Script | daron@ | 1bvN9a6PpoF2IIyimst3vpOKtQuAjVE23Mi15lJIQ0QuD2OVhguEVkIJx; files Code.gs (tools/create-contact-form.gs) + ContactIntake.gs (tools/contact-intake.gs); web app deployment AKfycbxcGs8fK_Uu6UgbwxrDIzZrwyeOWOreZpWsqDlh_UQ22RPR6l8F43Rc2DMQrLPMybkUNg (execute as daron@, access Anyone) = site.json contact_endpoint; Script Properties SENDER_TOKEN, FORM_ID, SHEET_ID, SENDER_GROUP_ID, UPDATED_GROUP_ID, SENDER_FIELDS; triggers processQueue (1 min), onDscaFormSubmit | free |
+| Sender.net (Free) | daron@ | groups Website Sign-ups + Updated Submission; automations Website Sign-up Welcome (builder e317kQ) + update email (trigger: joins Updated Submission, Repeat workflow ON); custom fields {{street_address}} {{community}} {{initiatives}} {{group_chat}} {{block_watch}} {{latest_comment}} {{last_updated}}; domain verified | 2,500 subs, 15,000 emails/mo, Sender footer |
 | Zeffy | daron@ | form support-delta-shores-community; bank linked | free |
 | Google Analytics 4 | godaron9@gmail.com | account 412947068, property dsca-2aa51 (560129606), web stream "DSCA Website" G-RJ6VRHM49B; site.json ga_measurement_id | free |
 | Google Search Console | godaron9@gmail.com | URL-prefix property https://www.deltashorescommunity.com/; verified by old HTML file + GA tag; sitemap.xml submitted 2026-10-29 (37 pages) | free |
@@ -56,6 +57,11 @@ flowchart LR
 - Deploy 403 = service account missing a role (needed Service Usage Consumer).
 - Stale CSS after deploy: site.css is cache-busted with ?v=<md5>.
 - Sender locks automation emails while Active; deactivate to edit.
+- Sender PATCH /subscribers/{email} with `groups` REPLACES all groups (tested 2026-10-29). Never send groups on update; use POST/DELETE /subscribers/groups/{id}.
+- Sender group add/remove takes a few seconds to register; back-to-back remove+add silently skips the add. Pause ~5 s between steps (SENDER_PAUSE_MS).
+- Leaving and rejoining a group re-fires a "joins group" automation only when Repeat workflow is ON.
+- Website form: the page reads doPost's JSON reply (no preflight: body sent as text/plain). Contact merge rules: blanks never overwrite, Initiatives replace, Comments are a dated history (newest first), Updates counts resubmissions.
+- `.btn` sets display, so `hidden` needs an explicit `[hidden]{display:none}` rule.
 - Sender Liquid: `{{ firstname | default: "neighbor" }}`; unsubscribe still `{$unsubscribe_link}`.
 - Claude can't: click Send/Activate in Sender, edit Squarespace DNS, enter tokens/bank info. Daron does those.
 

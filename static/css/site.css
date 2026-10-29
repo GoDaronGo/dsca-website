@@ -290,3 +290,13 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .res-list strong { font-size: 1.1rem; }
 .map-link { display: block; }
 .map-link img { width: 100%; }
+
+/* Contact form: confirmation replaces the submit button */
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form-done { border: 1.5px solid var(--sign); border-left-width: 6px; background: #e8f3ec; border-radius: 10px; padding: 16px 20px; max-width: 640px; }
+.form-done:focus { outline: none; }
+.form-done p { margin: 0 0 8px; }
+.form-done .form-done-title { font-weight: 700; font-size: 1.15rem; color: var(--sign-dark); }
+.form-done .form-done-again { margin: 4px 0 0; font-size: .95rem; }
+.form-error { color: #9f1d1d; margin: 12px 0 0; }
+.btn[hidden], .form-done[hidden], .form-error[hidden] { display: none; }

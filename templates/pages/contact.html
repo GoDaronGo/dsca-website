@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 {% set title = "Contact" %}
 {% set description = "Update your contact information and choose how you'd like to be involved." %}
-{% set f = integ.contact_form_fields %}
-{% set live = integ.contact_form_action %}
-{% macro n(key) %}{% if live and f[key] %} name="{{ f[key] }}"{% else %} name="{{ key }}"{% endif %}{% endmacro %}
+{% set live = integ.contact_endpoint %}
+{% macro n(key) %} name="{{ key }}"{% endmacro %}
 {% block main %}
 <div class="wrap page-head">
   <h1>Contact &amp; Involvement Form</h1>
@@ -13,7 +12,7 @@
   {% if not live %}
   <div class="notice"><p><strong>Preview:</strong> this form isn't connected yet, so it won't send. In the meantime, email <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p></div>
   {% endif %}
-  <form class="stack" method="post" action="{{ live or '#' }}" target="sent" id="contact-form">
+  <form class="stack" method="post" action="#" id="contact-form" data-endpoint="{{ live }}" novalidate>
     <div class="two">
       <div class="field"><label for="fn">First name <span class="req">*</span></label><input id="fn" type="text" autocomplete="given-name" required{{ n('first_name') }}></div>
       <div class="field"><label for="ln">Last name <span class="req">*</span></label><input id="ln" type="text" autocomplete="family-name" required{{ n('last_name') }}></div>
@@ -36,18 +35,70 @@
       <label class="choice"><input type="radio" value="No, thank you."{{ n('block_watch') }}> No, thank you</label></fieldset>
     <div class="field"><label for="cm">Comments</label><p class="hint">Notes, suggestions, or questions for the Association board.</p><textarea id="cm"{{ n('comments') }}></textarea></div>
     <input type="hidden" id="src"{{ n('source') }} value="website">
-    <div><button class="btn" type="submit"{% if not live %} disabled aria-disabled="true"{% endif %}>Send my information</button></div>
+    <div class="hp" aria-hidden="true"><label for="hp-web">Leave this empty</label><input id="hp-web" type="text" name="website" tabindex="-1" autocomplete="off"></div>
+    <div id="submit-area">
+      <button class="btn" type="submit" id="submit-btn"{% if not live %} disabled aria-disabled="true"{% endif %}>Send my information</button>
+      <div class="form-done" id="form-done" role="status" aria-live="polite" tabindex="-1" hidden>
+        <p class="form-done-title" id="done-title"></p>
+        <p id="done-body"></p>
+        <p class="form-done-again"><a href="#" id="submit-another">Submit for another person in your home</a></p>
+      </div>
+      <p class="form-error" id="form-error" role="alert" hidden>Sorry, that didn't go through. Please try again, or email <a href="mailto:{{ site.email }}">{{ site.email }}</a>.</p>
+    </div>
   </form>
-  <div id="thanks" hidden><h2>Thank you</h2><p>We look forward to connecting with you.</p></div>
-  <iframe name="sent" title="Form submission" hidden></iframe>
 </div>
 <script>
   (function () {
-    var s = new URLSearchParams(location.search).get('source');
-    if (s) document.getElementById('src').value = s;
     var form = document.getElementById('contact-form');
-    form.addEventListener('submit', function () {
-      setTimeout(function () { form.hidden = true; document.getElementById('thanks').hidden = false; window.scrollTo(0, 0); }, 300);
+    var src = document.getElementById('src');
+    var s = new URLSearchParams(location.search).get('source');
+    if (s) src.value = s;
+    var source = src.value;
+    var btn = document.getElementById('submit-btn');
+    var done = document.getElementById('form-done');
+    var err = document.getElementById('form-error');
+    var MESSAGES = {
+      'new': ['Thank you! You\u2019re signed up.', 'Check your email for a welcome message from the Delta Shores Community Association. It can take a few minutes, so check your spam folder if you don\u2019t see it.'],
+      'updated': ['Your information has been updated.', 'We\u2019ve emailed you a copy of everything we have on file for you.']
+    };
+    function collect() {
+      var d = { initiatives: [] };
+      Array.prototype.forEach.call(form.elements, function (el) {
+        if (!el.name) return;
+        if (el.type === 'checkbox') { if (el.checked) d.initiatives.push(el.value); return; }
+        if (el.type === 'radio') { if (el.checked) d[el.name] = el.value; return; }
+        d[el.name] = el.value.trim();
+      });
+      return d;
+    }
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      if (btn.disabled) return;
+      if (!form.reportValidity()) return;
+      err.hidden = true;
+      btn.disabled = true;
+      btn.textContent = 'Sending\u2026';
+      fetch(form.dataset.endpoint, { method: 'POST', body: JSON.stringify(collect()) })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (!res || !res.ok) throw new Error((res && res.error) || 'failed');
+          var m = MESSAGES[res.status] || MESSAGES['new'];
+          document.getElementById('done-title').textContent = m[0];
+          document.getElementById('done-body').textContent = m[1];
+          form.reset();
+          src.value = source;
+          btn.hidden = true;
+          done.hidden = false;
+          done.focus({ preventScroll: true });
+        })
+        .catch(function () { err.hidden = false; })
+        .then(function () { btn.disabled = false; btn.textContent = 'Send my information'; });
+    });
+    document.getElementById('submit-another').addEventListener('click', function (ev) {
+      ev.preventDefault();
+      done.hidden = true;
+      btn.hidden = false;
+      document.getElementById('fn').focus();
     });
   })();
 </script>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Your Delta Shores information was updated</title>
+</head>
+<body style="margin:0; padding:0; background:#eef2f8;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background:#eef2f8;">
+  <tr>
+    <td align="center" style="padding:24px 12px;">
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px; background:#ffffff; border-radius:10px;">
+        <tr>
+          <td align="center" style="padding:28px 24px 8px;">
+            <img src="https://dsca-2aa51.web.app/img/email-logo.png" width="240" alt="Delta Shores Community Association" style="display:block; width:240px; max-width:100%; height:auto; border:0;" />
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 32px 8px; font-family:Arial, Helvetica, sans-serif; color:#142640; font-size:16px; line-height:1.6;">
+            <h1 style="margin:0 0 16px; font-size:24px; line-height:1.25; color:#142640;">Your information has been updated</h1>
+            <p style="margin:0 0 14px;">Hi {{ firstname | default: "neighbor" }},</p>
+            <p style="margin:0 0 14px;">Thanks for keeping your details current. Here's everything the Delta Shores Community Association now has on file for you:</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:0 32px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-family:Arial, Helvetica, sans-serif; color:#142640; font-size:15px; line-height:1.5; border-bottom:1px solid #d5dde9;">
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Name</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ firstname }} {{ lastname }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Email</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ email }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Phone</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ phone | default: "(not given)" }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Street address</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ street_address | default: "(not given)" }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Community</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ community | default: "(not given)" }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Interested in</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ initiatives | default: "(none selected)" }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">WhatsApp group</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ group_chat }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Block Watch</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ block_watch }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Your latest comment</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ latest_comment | default: "(none)" }}</td></tr>
+                <tr><td style="padding:8px 0; border-top:1px solid #d5dde9; width:40%; color:#475569; vertical-align:top;">Last updated</td><td style="padding:8px 0; border-top:1px solid #d5dde9; vertical-align:top;">{{ last_updated }}</td></tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:18px 32px 0;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background:#fdf6e1; border-left:4px solid #e4b22b; border-radius:0 6px 6px 0;">
+              <tr>
+                <td style="padding:14px 18px; font-family:Arial, Helvetica, sans-serif; color:#142640; font-size:15px; line-height:1.55;">
+                  <strong>Didn't make this change?</strong> If you didn't submit the form, someone may have used your email. <a href="mailto:info@deltashorescommunity.com?subject=Report%3A%20I%20didn%27t%20submit%20this&amp;body=Someone%20updated%20my%20Delta%20Shores%20contact%20information%20({{ email }})%20and%20it%20wasn%27t%20me." style="color:#2457c5;">Let us know</a> and we'll fix it.
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:18px 32px 28px; font-family:Arial, Helvetica, sans-serif; color:#142640; font-size:16px; line-height:1.6;">
+            <p style="margin:0 0 14px;">Need to change something? Submit the form again at <a href="https://www.deltashorescommunity.com/contact" style="color:#2457c5;">deltashorescommunity.com/contact</a> with the same email, or just reply to this email.</p>
+            <p style="margin:0;">Neighbors helping neighbors,<br /><strong>The Delta Shores Community Association</strong></p>
+          </td>
+        </tr>
+      </table>
+      <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
+        <tr>
+          <td align="center" style="padding:16px 12px; font-family:Arial, Helvetica, sans-serif; color:#5b6b80; font-size:12px; line-height:1.5;">
+            Delta Shores Community Association &middot; Sacramento, CA 95832<br />
+            You're receiving this because {{ email }} was entered on the contact form at deltashorescommunity.com.<br />
+            <a href="{$unsubscribe_link}" style="color:#5b6b80; text-decoration:underline;">Unsubscribe</a>
+            &nbsp;&middot;&nbsp;
+            <a href="mailto:info@deltashorescommunity.com?subject=Report%3A%20I%20didn%27t%20submit%20this&amp;body=Someone%20submitted%20the%20Delta%20Shores%20contact%20form%20with%20my%20email%20({{ email }})%20and%20it%20wasn%27t%20me." style="color:#5b6b80; text-decoration:underline;">Didn't sign up? Report it</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
