@@ -73,6 +73,14 @@ flowchart LR
 Website plan and Email Campaigns cancelled; Squarespace form->Drive link disconnected. No export needed (contacts were already synced to the sheet; no unsubscribes). Domain stays on Squarespace Domains (renews 2027-11-02); DNS verified intact after cancelling (A, www CNAME, MX, SPF, DKIM, DMARC, Google verification).
 Optional tidy-up: delete unused Sender form "DSCA Website Mailing List".
 
+## Zeffy (donations + membership)
+
+Admin: daron@ (Treasurer); donor replies go to the admin address. Both campaigns' emails rewritten in DSCA voice on 2026-10-29, signed "Daron Go, Treasurer", with banners hosted at /img/email/donation-thanks.jpg and /img/email/membership-thanks.jpg (static/img/email).
+- Donation form "Support Delta Shores Community": thank-you (subject "Thank you for supporting Delta Shores!"), yearly auto-renew reminder ON (30 days). Tax receipts auto-generated.
+- Membership "Delta Shores Annual Membership" ($25/yr, valid 1 year from purchase, auto-renew offered, member cards on): new description; thank-you, expiration reminder and auto-renew reminder rewritten (Zeffy's renew/manage links kept).
+- Notifications: info@ is a collaborator with ONLY "Notify of new payments", all campaigns (one email per payment). info@ is a Google Group, so board members on it get these.
+- Editing gotcha: email bodies are Froala editors; set content by clicking into the visible editor and replacing its range. Variables are `<span data-custom-variable="{{firstname}}">` chips (ticketing labels it "Buyer first name"; same variable).
+
 ## SEO
 
 Canonical tag on every page (build.py sets `canonical`), NGO schema.org JSON-LD on the home page, /privacy page (GA section appears when ga_measurement_id is set), sitemap.xml + robots.txt. site.json `google_site_verification` slot exists but is unused (GA verifies Search Console; keep the GA tag or Search Console may lose verification).
