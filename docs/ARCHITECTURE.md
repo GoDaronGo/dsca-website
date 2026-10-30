@@ -32,7 +32,7 @@ flowchart LR
 | Google Form (retired) | daron@ | 1_NElptlC1UpTkYmRD_rDYHYMXrQm_UC8ed6uFL8-qrc (published 1FAIpQLScVmfFtk7qoYktc6ws7phrU55YTNkv9npJrNFMEX-3GCDnedg) | free |
 | Response sheet | daron@ | 1lufYhdb2fMekOZ1ni7uPiLgKxr0iiHDvTjbqzjJz8D4 (tabs: All Contacts = one row per email, Website Submissions (raw), Form Responses 1 = archive, Imported (old website)) | free |
 | Apps Script | daron@ | 1bvN9a6PpoF2IIyimst3vpOKtQuAjVE23Mi15lJIQ0QuD2OVhguEVkIJx; files Code.gs (tools/create-contact-form.gs) + ContactIntake.gs (tools/contact-intake.gs); web app deployment AKfycbxcGs8fK_Uu6UgbwxrDIzZrwyeOWOreZpWsqDlh_UQ22RPR6l8F43Rc2DMQrLPMybkUNg (execute as daron@, access Anyone) = site.json contact_endpoint; Script Properties SENDER_TOKEN, FORM_ID, SHEET_ID, SENDER_GROUP_ID, UPDATED_GROUP_ID, SENDER_FIELDS; triggers processQueue (1 min), onDscaFormSubmit | free |
-| Sender.net (Free) | daron@ | groups Website Sign-ups + Updated Submission; automations Website Sign-up Welcome (builder e317kQ) + update email (trigger: joins Updated Submission, Repeat workflow ON); custom fields {{street_address}} {{community}} {{initiatives}} {{group_chat}} {{block_watch}} {{latest_comment}} {{last_updated}}; domain verified | 2,500 subs, 15,000 emails/mo, Sender footer |
+| Sender.net (Free) | daron@ | groups Website Sign-ups + Updated Submission; automations Website Sign-up Welcome (builder e317kQ) + update email (trigger: joins Updated Submission, Repeat workflow ON); custom fields {{phone_on_file}} {{street_address}} {{community}} {{initiatives}} {{group_chat}} {{block_watch}} {{latest_comment}} {{last_updated}}; domain verified | 2,500 subs, 15,000 emails/mo, Sender footer |
 | Zeffy | daron@ | form support-delta-shores-community; bank linked | free |
 | Google Analytics 4 | godaron9@gmail.com | account 412947068, property dsca-2aa51 (560129606), web stream "DSCA Website" G-RJ6VRHM49B; site.json ga_measurement_id | free |
 | Google Search Console | godaron9@gmail.com | URL-prefix property https://www.deltashorescommunity.com/; verified by old HTML file + GA tag; sitemap.xml submitted 2026-10-29 (37 pages) | free |
@@ -57,6 +57,7 @@ flowchart LR
 - Deploy 403 = service account missing a role (needed Service Usage Consumer).
 - Stale CSS after deploy: site.css is cache-busted with ?v=<md5>.
 - Sender locks automation emails while Active; deactivate to edit.
+- Sender's built-in phone does not fill `{{ phone }}` in automation emails (shows blank); use the custom text field {{phone_on_file}}.
 - Sender PATCH /subscribers/{email} with `groups` REPLACES all groups (tested 2026-10-29). Never send groups on update; use POST/DELETE /subscribers/groups/{id}.
 - Sender group add/remove takes a few seconds to register; back-to-back remove+add silently skips the add. Pause ~5 s between steps (SENDER_PAUSE_MS).
 - Leaving and rejoining a group re-fires a "joins group" automation only when Repeat workflow is ON.

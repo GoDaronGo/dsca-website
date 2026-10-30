@@ -37,6 +37,7 @@ var SIMPLE_FIELDS = [['first_name', 'First name'], ['last_name', 'Last name'], [
 
 // Sender custom fields (title -> how to read it from a contact record).
 var SENDER_FIELD_DEFS = [
+  ['Phone on file', function (r) { return r['Phone']; }], // Sender's built-in phone does not fill {{ phone }} in emails
   ['Street address', function (r) { return r['Street address']; }],
   ['Community', function (r) { return r['Community']; }],
   ['Initiatives', function (r) { return r['Initiatives']; }],
