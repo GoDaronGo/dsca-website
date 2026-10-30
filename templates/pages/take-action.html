@@ -6,6 +6,18 @@
 <div class="wrap" style="padding-bottom:32px">
   <img class="photo" src="/img/take-action.webp" alt="Neighbors working together outdoors" loading="lazy">
 </div>
+{% if integ.zeffy_membership_url %}
+<div class="wrap" style="padding-bottom:48px">
+  <div class="member-card" id="membership">
+    <div class="prose">
+      <h2>Become a member</h2>
+      <p>An annual membership is the simplest way to be part of what's happening in Delta Shores. Your membership helps fund block parties and community meetings, parks and beautification projects, and the work we do with city leaders and local businesses on the things that matter here.</p>
+      <p>Memberships are $25 a year, and every member receives a digital membership card.</p>
+    </div>
+    <div class="actions"><a class="btn give" href="{{ integ.zeffy_membership_url }}" rel="noopener">Join for $25/year</a></div>
+  </div>
+</div>
+{% endif %}
 <div class="wrap split" style="align-items:start; padding-bottom:72px">
   <div class="prose">
     <h2>Donate</h2>

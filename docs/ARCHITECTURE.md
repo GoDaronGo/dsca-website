@@ -76,8 +76,9 @@ Optional tidy-up: delete unused Sender form "DSCA Website Mailing List".
 ## Zeffy (donations + membership)
 
 Admin: daron@ (Treasurer); donor replies go to the admin address. Both campaigns' emails rewritten in DSCA voice on 2026-10-29, signed "Daron Go, Treasurer", with banners hosted at /img/email/donation-thanks.jpg and /img/email/membership-thanks.jpg (static/img/email).
-- Donation form "Support Delta Shores Community": thank-you (subject "Thank you for supporting Delta Shores!"), yearly auto-renew reminder ON (30 days). Tax receipts auto-generated.
+- Donation form "Support Delta Shores Community": thank-you (subject "Thank you for supporting Delta Shores!"), yearly auto-renew reminder ON (30 days), softened 2026-10-29 to a "thank you for last year, we'd love your support again" tone that still states the renewal date/amount and how to change or cancel. Tax receipts auto-generated.
 - Membership "Delta Shores Annual Membership" ($25/yr, valid 1 year from purchase, auto-renew offered, member cards on): new description; thank-you, expiration reminder and auto-renew reminder rewritten (Zeffy's renew/manage links kept).
+- Website: Take Action page has a "Become a member" section (#membership) linking to site.json zeffy_membership_url (https://www.zeffy.com/en-US/ticketing/delta-shores-community-associations-memberships; slug kept the old campaign name); Donate page and footer link to it.
 - Notifications: info@ is a collaborator with ONLY "Notify of new payments", all campaigns (one email per payment). info@ is a Google Group, so board members on it get these.
 - Editing gotcha: email bodies are Froala editors; set content by clicking into the visible editor and replacing its range. Variables are `<span data-custom-variable="{{firstname}}">` chips (ticketing labels it "Buyer first name"; same variable).
 

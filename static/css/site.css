@@ -300,3 +300,9 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .form-done .form-done-again { margin: 4px 0 0; font-size: .95rem; }
 .form-error { color: #9f1d1d; margin: 12px 0 0; }
 .btn[hidden], .form-done[hidden], .form-error[hidden] { display: none; }
+
+/* Take Action: membership callout */
+.member-card { display: grid; grid-template-columns: 1fr auto; gap: 24px 40px; align-items: center; background: var(--mist); border: 1px solid var(--line); border-left: 6px solid var(--gold); border-radius: 12px; padding: clamp(20px, 4vw, 32px); }
+.member-card h2 { margin-top: 0; }
+.member-card .prose p:last-child { margin-bottom: 0; }
+@media (max-width: 720px) { .member-card { grid-template-columns: 1fr; } }

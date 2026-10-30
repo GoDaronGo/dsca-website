@@ -48,6 +48,7 @@
   "integrations": {
     "_note": "Fill these in once the free accounts exist. Leave a value empty to show the 'not connected yet' fallback.",
     "zeffy_donation_form_url": "https://www.zeffy.com/embed/donation-form/support-delta-shores-community",
+    "zeffy_membership_url": "https://www.zeffy.com/en-US/ticketing/delta-shores-community-associations-memberships",
     "contact_endpoint": "https://script.google.com/macros/s/AKfycbxcGs8fK_Uu6UgbwxrDIzZrwyeOWOreZpWsqDlh_UQ22RPR6l8F43Rc2DMQrLPMybkUNg/exec",
     "_contact_endpoint_note": "Apps Script web app (DSCA Contact Form project, ContactIntake.gs). Writes to the DSCA Contact Form Responses sheet and syncs Sender.",
     "ga_measurement_id": "G-RJ6VRHM49B",
