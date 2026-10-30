@@ -503,3 +503,28 @@ function latestComment_(c) { return clean_(String(c || '').split('\n')[0].replac
 function fmtShort_(d) { return Utilities.formatDate(d, TZ, 'M/d/yyyy h:mm a'); }
 function fmtLong_(d) { return d instanceof Date ? Utilities.formatDate(d, TZ, "MMMM d, yyyy 'at' h:mm a") : String(d); }
 function ordinal_(n) { var s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
+
+/**
+ * One-time (safe to re-run): copies every All Contacts row into the Sender custom fields
+ * (Phone on file, Street address, Community, ...) so update emails show what's on file for
+ * people who signed up before those fields existed. Fields only: no groups, no automations, no email.
+ */
+function backfillSenderFields() {
+  var token = senderToken_();
+  var sh = contactsTab_(sheet_());
+  var vals = sh.getRange(2, 1, Math.max(sh.getLastRow() - 1, 1), CONTACT_COLS.length).getValues();
+  var done = 0, missing = [], failed = [];
+  vals.forEach(function (row) {
+    var rec = fromRow_(row);
+    var email = clean_(rec['Email']).toLowerCase();
+    if (!email) return;
+    var res = sjson_(token, 'patch', '/subscribers/' + encodeURIComponent(email), { fields: senderFieldValues_(rec), trigger_automation: false });
+    if (res._code < 300) done++;
+    else if (res._code === 404) missing.push(email);
+    else failed.push(email + ' (' + res._code + ')');
+    Utilities.sleep(300);
+  });
+  Logger.log('BACKFILL updated=' + done + ' notInSender=' + missing.length + ' failed=' + failed.length);
+  if (missing.length) Logger.log('Not in Sender: ' + missing.join(', '));
+  if (failed.length) Logger.log('Failed: ' + failed.join('; '));
+}
