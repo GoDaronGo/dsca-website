@@ -27,8 +27,8 @@ flowchart LR
 |---|---|---|---|
 | GitHub repo + Actions | GoDaronGo | GoDaronGo/dsca-website (public), main; secret FIREBASE_SERVICE_ACCOUNT | free for public repos |
 | Firebase Hosting (Spark) | godaron9@gmail.com | project dsca-2aa51; SA github-deploy (Firebase Hosting Admin + Service Usage Consumer) | 10 GB storage, 360 MB/day transfer |
-| Squarespace Domains | Squarespace login | deltashorescommunity.com, expires 2027-11-02 | paid yearly |
-| Google Workspace (nonprofit) | daron@deltashorescommunity.com | daron@, info@, junior@, monserrat@ | free |
+| Squarespace Domains | Squarespace login | deltashorescommunity.com, expires 2027-11-02 (website plan + Email Campaigns cancelled 2026-10-29) | paid yearly |
+| Google Workspace (nonprofit) | daron@deltashorescommunity.com | daron@, info@, junior@, monserrat@ | discounted nonprofit plan, billed by Google |
 | Google Form (retired) | daron@ | 1_NElptlC1UpTkYmRD_rDYHYMXrQm_UC8ed6uFL8-qrc (published 1FAIpQLScVmfFtk7qoYktc6ws7phrU55YTNkv9npJrNFMEX-3GCDnedg) | free |
 | Response sheet | daron@ | 1lufYhdb2fMekOZ1ni7uPiLgKxr0iiHDvTjbqzjJz8D4 (tabs: All Contacts = one row per email, Website Submissions (raw), Form Responses 1 = archive, Imported (old website)) | free |
 | Apps Script | daron@ | 1bvN9a6PpoF2IIyimst3vpOKtQuAjVE23Mi15lJIQ0QuD2OVhguEVkIJx; files Code.gs (tools/create-contact-form.gs) + ContactIntake.gs (tools/contact-intake.gs); web app deployment AKfycbxcGs8fK_Uu6UgbwxrDIzZrwyeOWOreZpWsqDlh_UQ22RPR6l8F43Rc2DMQrLPMybkUNg (execute as daron@, access Anyone) = site.json contact_endpoint; Script Properties SENDER_TOKEN, FORM_ID, SHEET_ID, SENDER_GROUP_ID, UPDATED_GROUP_ID, SENDER_FIELDS; triggers processQueue (1 min), onDscaFormSubmit | free |
@@ -68,11 +68,10 @@ flowchart LR
 - Sender Liquid: `{{ firstname | default: "neighbor" }}`; unsubscribe still `{$unsubscribe_link}`.
 - Claude can't: click Send/Activate in Sender, edit Squarespace DNS, enter tokens/bank info. Daron does those.
 
-## Pending decommission (see guide)
+## Squarespace decommission (done 2026-10-29)
 
-Back up Squarespace mailing list (with unsubscribes) and site export; disconnect Squarespace form->Drive;
-cancel Squarespace Email Campaigns ($12/mo) and website plan ($25/mo) keeping the domain; verify DNS after;
-delete Sender draft "Welcome (Ecommerce)" automation and unused "DSCA Website Mailing List" form.
+Website plan and Email Campaigns cancelled; Squarespace form->Drive link disconnected. No export needed (contacts were already synced to the sheet; no unsubscribes). Domain stays on Squarespace Domains (renews 2027-11-02); DNS verified intact after cancelling (A, www CNAME, MX, SPF, DKIM, DMARC, Google verification).
+Optional tidy-up: delete unused Sender form "DSCA Website Mailing List".
 
 ## SEO
 
