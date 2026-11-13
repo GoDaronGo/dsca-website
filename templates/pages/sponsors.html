@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% set title = "Our Sponsors" %}
+{% set description = "The businesses that sponsor and support the Delta Shores Community Association." %}
+{% set sp = site.sponsors %}
+{% block main %}
+<section class="page-banner">
+  <img src="/img/site/aerial-center.webp" alt="Aerial view of the Delta Shores shopping center" width="1250" height="758">
+  <div class="wrap"><h1>Our Sponsors</h1></div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <p class="intro-lede" style="max-width:52ch">The Delta Shores Community Association is a volunteer-run nonprofit. These businesses help make our meetings, events, and neighborhood projects possible.</p>
+    <p class="muted" style="max-width:var(--measure)">When you visit them, please tell them thank you from Delta Shores.</p>
+
+    <article class="sponsor lead">
+      <a class="sponsor-logo" href="{{ sp.lead.url }}" rel="noopener"><img src="{{ sp.lead.logo }}" alt="{{ sp.lead.name }} logo" loading="lazy"></a>
+      <div>
+        <p class="tier">{{ sp.lead.tier }}</p>
+        <h2>{{ sp.lead.name }}</h2>
+        <p>{{ sp.lead.thanks }}</p>
+        <p class="muted">{{ sp.lead.about }}</p>
+        <p><a class="btn quiet" href="{{ sp.lead.url }}" rel="noopener">Visit {{ sp.lead.site }}</a></p>
+      </div>
+    </article>
+
+    {% for s in sp.partners %}
+    <article class="sponsor">
+      <a class="sponsor-logo" href="{{ s.url }}" rel="noopener"><img src="{{ s.logo }}" alt="{{ s.name }} logo" loading="lazy"></a>
+      <div>
+        <p class="tier">{{ s.tier }}</p>
+        <h2>{{ s.name }}</h2>
+        <p>{{ s.thanks }}</p>
+        <p class="muted">{{ s.about }}{% if s.address %}<br><a href="{{ s.map }}" rel="noopener">{{ s.address }}</a>{% endif %}</p>
+        <p><a class="btn quiet" href="{{ s.url }}" rel="noopener">Visit {{ s.site }}</a></p>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="band mist">
+  <div class="wrap">
+    <h2>Community supporters</h2>
+    <p class="muted section-note">Local businesses that cheer us on.</p>
+    <ul class="res-list" style="max-width:720px">
+      {% for s in sp.supporters %}
+      <li>{% if s.url %}<a href="{{ s.url }}" rel="noopener">{{ s.name }}</a>{% else %}<strong>{{ s.name }}</strong>{% endif %}{% if s.note %}<span>{{ s.note }}</span>{% endif %}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap split">
+    <div>
+      <h2>Become a sponsor</h2>
+      <p>Does your business serve Delta Shores? Sponsoring the association is a great way to meet your neighbors and support the community around you. We'd love to talk.</p>
+    </div>
+    <div><a class="btn" href="mailto:{{ site.email }}?subject=Sponsoring%20the%20Delta%20Shores%20Community%20Association">Email {{ site.email }}</a></div>
+  </div>
+</section>
+{% endblock %}

@@ -306,3 +306,15 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .member-card h2 { margin-top: 0; }
 .member-card .prose p:last-child { margin-bottom: 0; }
 @media (max-width: 720px) { .member-card { grid-template-columns: 1fr; } }
+
+/* Sponsors */
+.sponsor { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 20px 44px; align-items: center; padding: 32px 0; border-top: 1px solid var(--line); }
+.sponsor.lead { margin-top: 36px; padding: clamp(24px, 4vw, 40px); border: 0; border-left: 6px solid var(--gold); background: var(--mist); border-radius: 0 12px 12px 0; }
+.sponsor.lead + .sponsor { border-top: 0; }
+.sponsor-logo { display: grid; place-items: center; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; min-height: 150px; }
+.sponsor-logo img { max-height: 150px; width: auto; }
+.sponsor h2 { margin: 0 0 .35em; }
+.sponsor p { max-width: 60ch; }
+.sponsor p:last-child { margin-bottom: 0; }
+.tier { font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; color: var(--sign); margin: 0 0 6px; }
+@media (max-width: 720px) { .sponsor { grid-template-columns: 1fr; } .sponsor-logo { max-width: 320px; } }

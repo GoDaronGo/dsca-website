@@ -181,5 +181,42 @@
       "name": "Island Fin Poke",
       "url": "https://www.islandfinpoke.com/locations/"
     }
-  ]
+  ],
+  "sponsors": {
+    "lead": {
+      "name": "SMUD",
+      "tier": "Lead Sponsor",
+      "logo": "/img/site/smud-logo.webp",
+      "url": "https://www.smud.org/",
+      "site": "smud.org",
+      "about": "SMUD is Sacramento's community-owned, not-for-profit electric utility.",
+      "thanks": "SMUD has been our lead sponsor for the last couple of years, and their support has provided most of our funding. Much of what the Delta Shores Community Association does for our neighborhood is possible because of them."
+    },
+    "partners": [
+      {
+        "name": "Casa Flores Mexican Restaurant",
+        "tier": "Community Partner",
+        "logo": "/img/site/casa-flores-logo.webp",
+        "url": "http://casafloresrestaurants.com/",
+        "site": "casafloresrestaurants.com",
+        "address": "8304 Delta Shores Circle South, Suites 130 & 140",
+        "map": "https://www.google.com/maps/search/?api=1&query=Casa+Flores+8304+Delta+Shores+Circle+South+Sacramento+CA+95832",
+        "about": "A family-owned Mexican restaurant in the Delta Shores shopping center.",
+        "thanks": "Casa Flores has opened its doors to us again and again, providing the space for our community meetings."
+      }
+    ],
+    "supporters": [
+      {
+        "name": "The Hot Spot",
+        "url": "",
+        "note": ""
+      },
+      {
+        "name": "Island Fin Poké Co.",
+        "url": "https://www.islandfinpoke.com/locations/",
+        "site": "islandfinpoke.com",
+        "note": "Poke bowls at 8140 Delta Shores Circle South, Suite 130"
+      }
+    ]
+  }
 }
