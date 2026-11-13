@@ -175,7 +175,7 @@
     },
     {
       "name": "The Hot Spot",
-      "url": ""
+      "url": "https://www.thehotspotstudios.com/sacramento-ca/"
     },
     {
       "name": "Island Fin Poke",
@@ -208,8 +208,9 @@
     "supporters": [
       {
         "name": "The Hot Spot",
-        "url": "",
-        "note": ""
+        "url": "https://www.thehotspotstudios.com/sacramento-ca/",
+        "note": "Pottery painting, candle making and crafts at 8140 Delta Shores Circle South, Suite 120",
+        "site": "thehotspotstudios.com"
       },
       {
         "name": "Island Fin Poké Co.",
