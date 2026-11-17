@@ -323,3 +323,10 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .prose .post-sponsor-logos { margin: 2.5rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--line); text-align: center; }
 .prose .post-sponsor-logos p { margin: 0 0 .75rem; font-size: .875rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
 .prose .post-sponsor-logos img { display: inline-block; width: min(240px, 70%); height: auto; margin: 0; border-radius: 0; }
+
+/* Two-up photo pairs in posts */
+.prose .photo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.5rem 0; }
+.prose .photo-pair img { margin: 0; width: 100%; height: 100%; aspect-ratio: 3/4; object-fit: cover; }
+@media (max-width: 520px) { .prose .photo-pair { grid-template-columns: 1fr; } }
+.prose .perk { background: var(--mist); border-left: 6px solid var(--gold); border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 1.5rem 0; }
+.prose .perk p:last-child { margin-bottom: 0; }
