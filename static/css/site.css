@@ -318,3 +318,8 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .sponsor p:last-child { margin-bottom: 0; }
 .tier { font-weight: 700; font-size: .85rem; letter-spacing: .1em; text-transform: uppercase; color: var(--sign); margin: 0 0 6px; }
 @media (max-width: 720px) { .sponsor { grid-template-columns: 1fr; } .sponsor-logo { max-width: 320px; } }
+
+/* Sponsor logos at the bottom of a post */
+.prose .post-sponsor-logos { margin: 2.5rem 0 0; padding-top: 1.5rem; border-top: 1px solid var(--line); text-align: center; }
+.prose .post-sponsor-logos p { margin: 0 0 .75rem; font-size: .875rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-soft); }
+.prose .post-sponsor-logos img { display: inline-block; width: min(240px, 70%); height: auto; margin: 0; border-radius: 0; }
