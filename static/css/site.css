@@ -349,3 +349,14 @@ fieldset { border: 0; padding: 0; margin: 0; }
 .printables h3 { margin: 0 0 6px; font-size: 1.2rem; }
 .printables p { margin: 0 0 8px; }
 @media (max-width: 520px) { .printables > li { grid-template-columns: 110px 1fr; } .printables img { width: 110px; } }
+
+/* Giving levels (donation posts) */
+.prose .giving-levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 1.25rem 0; }
+.prose .level { position: relative; border: 1px solid var(--line); border-radius: 12px; padding: 20px 18px 16px; background: #fff; text-align: center; }
+.prose .level p { margin: 0 0 8px; font-size: .95rem; }
+.prose .level .level-name { font-weight: 700; color: var(--blue-dark); text-transform: uppercase; letter-spacing: .06em; font-size: .8rem; }
+.prose .level .level-amount { font-family: var(--display); font-weight: 800; font-size: 2.4rem; line-height: 1; color: var(--ink); margin-bottom: 12px; }
+.prose .level .level-amount span { font-family: var(--text); font-size: 1rem; font-weight: 600; color: var(--ink-soft); }
+.prose .level.featured { border: 2px solid var(--gold); background: var(--mist); }
+.prose .level .level-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--ink); font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 3px 10px; border-radius: 999px; margin: 0; white-space: nowrap; }
+@media (max-width: 640px) { .prose .giving-levels { grid-template-columns: 1fr; gap: 18px; } }
