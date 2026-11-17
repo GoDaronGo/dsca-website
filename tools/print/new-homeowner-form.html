@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>New Homeowner Sign-Up Form | Delta Shores Community Association</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600..800&family=Public+Sans:wght@400;600;700&display=swap">
+<style>
+  @page { size: letter; margin: 0; }
+  :root {
+    --blue: #2457c5; --blue-dark: #1a3f93; --ink: #142640; --ink-soft: #475569;
+    --gold: #e4b22b; --mist: #eef2f8; --line: #b9c4d6;
+    --display: "Archivo", "Arial Narrow", sans-serif; --text: "Public Sans", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { width: 8.5in; height: 11in; font: 400 9.4pt/1.38 var(--text); color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 8.5in; height: 11in; padding: .38in .5in .3in; display: flex; flex-direction: column; overflow: hidden; }
+  h1, h2 { font-family: var(--display); font-stretch: 88%; margin: 0; line-height: 1.05; }
+  p { margin: 0; }
+
+  header { display: grid; grid-template-columns: 1fr 1.05in; gap: .25in; align-items: center; padding-bottom: .14in; border-bottom: 3px solid var(--blue); }
+  .brand { display: flex; align-items: center; gap: .18in; }
+  .brand img { height: .58in; }
+  header h1 { font-size: 21pt; font-weight: 800; color: var(--ink); }
+  header .sub { font-size: 9.2pt; color: var(--ink-soft); margin-top: 3px; }
+  .qr { text-align: center; }
+  .qr img { width: .9in; display: block; margin: 0 auto; }
+  .qr span { display: block; font: 700 6.6pt/1.25 var(--text); letter-spacing: .04em; color: var(--ink); margin-top: 4px; }
+
+  .welcome { margin: .13in 0 .02in; font-size: 9.4pt; color: var(--ink); }
+
+  h2 { font-size: 11pt; color: var(--blue-dark); margin: .15in 0 .02in; text-transform: none; }
+  .row { display: grid; gap: .22in; margin-top: .1in; }
+  .r2 { grid-template-columns: 1fr 1fr; }
+  .r21 { grid-template-columns: 2fr 1fr; }
+  .field label { display: block; font: 600 8.2pt var(--text); color: var(--ink-soft); margin-bottom: 0; }
+  .field .line { height: .3in; border-bottom: 1px solid var(--line); }
+  .req { color: #c0392b; }
+  .hint { font-size: 8pt; color: var(--ink-soft); }
+
+  .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px .15in; margin-top: .07in; }
+  .choices.two { grid-template-columns: 1fr 1fr; }
+  .box { display: flex; align-items: flex-start; gap: 7px; font-size: 9pt; line-height: 1.25; }
+  .box::before { content: ""; flex: none; width: 11px; height: 11px; border: 1.3px solid var(--ink); border-radius: 2px; margin-top: 1px; }
+  .round::before { border-radius: 50%; }
+  .other { display: flex; align-items: flex-end; gap: 6px; }
+  .other::after { content: ""; flex: 1; border-bottom: 1px solid var(--line); height: 12px; }
+
+  .q { margin-top: .11in; }
+  .q p { font-size: 9pt; }
+  .comments { margin-top: .07in; }
+  .comments .line { height: .28in; border-bottom: 1px solid var(--line); }
+
+  .consent { margin-top: .14in; display: grid; grid-template-columns: 1fr 1.7in; gap: .22in; align-items: end; font-size: 8pt; color: var(--ink-soft); }
+
+  .builder { margin-top: auto; background: var(--mist); border-radius: 8px; padding: .12in .18in .14in; }
+  .builder h2 { margin: 0 0 .02in; font-size: 10pt; color: var(--ink); }
+  .builder .row { margin-top: .05in; }
+  .builder .field .line { height: .26in; border-bottom-color: #9fb0c8; }
+  .return { margin-top: .1in; font-size: 8.6pt; display: flex; justify-content: space-between; gap: .2in; align-items: center; }
+  .return strong { color: var(--blue-dark); }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="brand">
+      <img src="../../static/img/logo.webp" alt="Delta Shores Community Association">
+      <div>
+        <h1>Welcome Home! New Neighbor Sign-Up</h1>
+        <p class="sub">A 501(c)(3) nonprofit · deltashorescommunity.com</p>
+      </div>
+    </div>
+    <div class="qr">
+      <img src="qr-form.svg" alt="QR code to the online sign-up form">
+      <span>Prefer online?<br>Scan to fill this out</span>
+    </div>
+  </header>
+
+  <p class="welcome">Congratulations on your new home! Fill out this form to get invites to neighborhood events, community news, and the official Delta Shores WhatsApp group. It's free. <strong>Please print clearly.</strong></p>
+
+  <h2>Your information</h2>
+  <div class="row r2">
+    <div class="field"><label>First name <span class="req">*</span></label><div class="line"></div></div>
+    <div class="field"><label>Last name <span class="req">*</span></label><div class="line"></div></div>
+  </div>
+  <div class="row r21">
+    <div class="field"><label>Email <span class="req">*</span> <span class="hint">(our main way to reach you)</span></label><div class="line"></div></div>
+    <div class="field"><label>Phone</label><div class="line"></div></div>
+  </div>
+  <div class="row">
+    <div class="field"><label>Street address</label><div class="line"></div></div>
+  </div>
+
+  <h2>Which Delta Shores community do you live in? <span class="req">*</span></h2>
+  <div class="choices">
+    <span class="box round">Coronado</span>
+    <span class="box round">Catalina</span>
+    <span class="box round">Avalon</span>
+    <span class="box round">Balboa</span>
+    <span class="box round">Edgewater</span>
+    <span class="box round">Riva</span>
+    <span class="box round">Dockside</span>
+    <span class="box round">Ibiza</span>
+    <span class="box round other">Other:</span>
+  </div>
+
+  <h2>Which community initiatives interest you? <span class="hint" style="font-family:var(--text);font-weight:400">(check all that apply)</span></h2>
+  <div class="choices">
+    <span class="box">Neighborhood Block Party</span>
+    <span class="box">Parks and Beautification Projects</span>
+    <span class="box">Community Meetings</span>
+    <span class="box">Youth/Family Activities</span>
+    <span class="box">Community Communications and Newsletter</span>
+    <span class="box other">Other:</span>
+  </div>
+
+  <div class="q">
+    <h2 style="margin-top:.04in">Group chat <span class="req">*</span></h2>
+    <p>Would you like to join the official Delta Shores Community WhatsApp group for announcements and discussion?</p>
+    <div class="choices two">
+      <span class="box round">Yes, add me to the WhatsApp group</span>
+      <span class="box round">Not right now</span>
+    </div>
+  </div>
+
+  <div class="q">
+    <h2 style="margin-top:.04in">Block Watch <span class="req">*</span></h2>
+    <p>Are you interested in the Delta Shores Block Watch program for neighborhood safety?</p>
+    <div class="choices two">
+      <span class="box round">Yes, I'd like to join or learn more</span>
+      <span class="box round">No, thank you</span>
+    </div>
+  </div>
+
+  <h2>Comments or questions for the board</h2>
+  <div class="comments"><div class="line"></div><div class="line"></div></div>
+
+  <div class="consent">
+    <p>One form per person. If more than one person in your home would like emails, please fill out a form for each. By signing up, you agree to receive emails from the Delta Shores Community Association. You can unsubscribe at any time.</p>
+    <div class="field"><label>Date</label><div class="line"></div></div>
+  </div>
+
+  <div class="builder" style="margin-top:.2in">
+    <h2>For builder / sales office use</h2>
+    <div class="row" style="grid-template-columns: 1.3fr 1fr 1fr; gap:.2in">
+      <div class="field"><label>Builder &amp; community</label><div class="line"></div></div>
+      <div class="field"><label>Sales contact</label><div class="line"></div></div>
+      <div class="field"><label>Est. move-in date</label><div class="line"></div></div>
+    </div>
+    <div class="return">
+      <span>Please scan or photograph completed forms and email them to <strong>info@deltashorescommunity.com</strong></span>
+      <span style="white-space:nowrap">deltashorescommunity.com</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

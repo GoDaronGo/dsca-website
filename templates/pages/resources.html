@@ -1,11 +1,61 @@
 {% extends "base.html" %}
 {% set title = "Resources" %}
-{% set description = "Delta Shores home builders, shopping, and supporting local businesses." %}
+{% set description = "Delta Shores civic leaders, printable handouts, home builders, shopping, and supporting local businesses." %}
 {% macro host(u) %}{{ u.split('//')[1].split('/')[0].replace('www.', '') }}{% endmacro %}
 {% block main %}
 <section class="page-banner">
   <img src="/img/site/delta5.webp" alt="Walkway between shops at the Delta Shores shopping center" width="1056" height="594">
   <div class="wrap"><h1>Resources</h1></div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>Our civic leaders</h2>
+    <p class="muted section-note">The elected officials and public safety leaders who work with us on behalf of Delta Shores.</p>
+    <ul class="leaders">
+      {% for l in site.civic_leaders %}
+      <li>
+        <h3>{% if l.url %}<a href="{{ l.url }}" rel="noopener">{{ l.name }}</a>{% else %}{{ l.name }}{% endif %}</h3>
+        <p class="role">{{ l.role }}</p>
+        {% if l.email or l.phone %}<p class="contact">{% if l.email %}<a href="mailto:{{ l.email }}">{{ l.email }}</a>{% endif %}{% if l.email and l.phone %}<br>{% endif %}{% if l.phone %}<a href="tel:+1{{ l.phone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ l.phone }}</a>{% if l.phone_note %} <span class="muted">({{ l.phone_note }})</span>{% endif %}{% endif %}</p>{% endif %}
+        {% if l.staff %}
+        {% if l.staff_label %}<p class="staff-label">{{ l.staff_label }}</p>{% endif %}
+        <ul class="staff">
+          {% for st in l.staff %}
+          <li><strong>{{ st.name }}</strong>, {{ st.role }}{% if st.email %}<br><a href="mailto:{{ st.email }}">{{ st.email }}</a>{% endif %}{% if st.phone %}<br><a href="tel:+1{{ st.phone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ st.phone }}</a>{% endif %}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="muted" style="margin-top:16px">For emergencies, call 911. For non-emergency City services like street flooding, fallen trees or streetlights, call 311.</p>
+  </div>
+</section>
+
+<section class="band mist" id="printables">
+  <div class="wrap">
+    <h2>Printable handouts</h2>
+    <p class="muted section-note">Free to print and share at events, with new neighbors, and at the model homes.</p>
+    <ul class="printables">
+      <li>
+        <a href="/print/dsca-welcome-flyer.pdf"><img src="/img/site/print-welcome-flyer.webp" alt="Preview of the Welcome to Delta Shores flyer" width="340" height="440" loading="lazy"></a>
+        <div>
+          <h3><a href="/print/dsca-welcome-flyer.pdf">Welcome to Delta Shores flyer</a></h3>
+          <p>A one-page introduction to the association: who we are, what we do, and how to get involved, with a QR code to sign up.</p>
+          <p class="muted">PDF, letter size</p>
+        </div>
+      </li>
+      <li>
+        <a href="/print/dsca-new-homeowner-form.pdf"><img src="/img/site/print-new-homeowner-form.webp" alt="Preview of the New Neighbor Sign-Up form" width="340" height="440" loading="lazy"></a>
+        <div>
+          <h3><a href="/print/dsca-new-homeowner-form.pdf">New Neighbor Sign-Up form</a></h3>
+          <p>A paper version of our <a href="/contact">online sign-up form</a> for new homeowners. Builders and sales offices: please scan or photograph completed forms and email them to <a href="mailto:info@deltashorescommunity.com">info@deltashorescommunity.com</a>.</p>
+          <p class="muted">PDF, letter size</p>
+        </div>
+      </li>
+    </ul>
+  </div>
 </section>
 
 <section class="band">

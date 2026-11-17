@@ -330,3 +330,22 @@ fieldset { border: 0; padding: 0; margin: 0; }
 @media (max-width: 520px) { .prose .photo-pair { grid-template-columns: 1fr; } }
 .prose .perk { background: var(--mist); border-left: 6px solid var(--gold); border-radius: 0 12px 12px 0; padding: 18px 22px; margin: 1.5rem 0; }
 .prose .perk p:last-child { margin-bottom: 0; }
+
+/* Resources: civic leaders */
+.leaders { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 18px; }
+.leaders > li { border: 1px solid var(--line); border-top: 4px solid var(--blue); border-radius: 10px; padding: 18px 20px; background: #fff; }
+.leaders h3 { margin: 0 0 4px; font-size: 1.2rem; }
+.leaders h3 a { text-decoration: none; }
+.leaders .role { margin: 0 0 10px; color: var(--ink-soft); font-size: .95rem; }
+.leaders .contact { margin: 0 0 10px; font-size: .95rem; }
+.leaders .staff-label { margin: 12px 0 4px; font-size: .8rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+.leaders .staff { list-style: none; margin: 0; padding: 10px 0 0; border-top: 1px solid var(--line); font-size: .9rem; display: grid; gap: 8px; }
+.leaders .staff-label + .staff { padding-top: 0; border-top: 0; }
+
+/* Resources: printable handouts */
+.printables { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 28px; }
+.printables > li { display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: start; }
+.printables img { width: 150px; border-radius: 6px; border: 1px solid var(--line); box-shadow: 0 6px 18px rgba(20, 38, 64, .12); background: #fff; }
+.printables h3 { margin: 0 0 6px; font-size: 1.2rem; }
+.printables p { margin: 0 0 8px; }
+@media (max-width: 520px) { .printables > li { grid-template-columns: 110px 1fr; } .printables img { width: 110px; } }

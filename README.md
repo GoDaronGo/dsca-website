@@ -68,3 +68,7 @@ Fill in `content/site.json → integrations` and rebuild:
 - `contact_form_action` + `contact_form_fields` — Google Form `formResponse` URL and entry IDs (Contact page)
 
 Until a value is set, the page shows a "not connected yet" note instead.
+
+## Printable handouts
+
+`tools/print/` holds the HTML sources for the printable flyer and new-homeowner form. Edit the HTML, then run `python3 tools/print/render.py` (needs Playwright + Chromium) to regenerate the PDFs in `static/print/`, which are linked from the Resources page. QR codes point to `/contact?source=flyer` and `/contact?source=builder`, so sign-ups from them are tagged in the contact sheet's Source column.

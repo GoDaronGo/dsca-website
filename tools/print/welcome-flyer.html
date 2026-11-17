@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Welcome to Delta Shores | Delta Shores Community Association</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,600..800&family=Public+Sans:wght@400;600;700&display=swap">
+<style>
+  @page { size: letter; margin: 0; }
+  :root {
+    --blue: #2457c5; --blue-dark: #1a3f93; --ink: #142640; --ink-soft: #475569;
+    --gold: #e4b22b; --mist: #eef2f8; --line: #d5dde9;
+    --display: "Archivo", "Arial Narrow", sans-serif; --text: "Public Sans", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { width: 8.5in; height: 11in; font: 400 9.6pt/1.42 var(--text); color: var(--ink); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { width: 8.5in; height: 11in; display: flex; flex-direction: column; overflow: hidden; }
+  h1, h2, h3 { font-family: var(--display); font-stretch: 88%; margin: 0; line-height: 1.05; }
+  p { margin: 0 0 .5em; }
+
+  header { display: flex; align-items: center; justify-content: space-between; padding: .38in .5in .18in; }
+  header img { height: .62in; }
+  header .tag { font: 700 8.5pt var(--text); letter-spacing: .04em; color: var(--blue); text-align: right; line-height: 1.5; }
+
+  .hero { position: relative; height: 3.05in; margin: 0 .5in; border-radius: 10px; overflow: hidden; }
+  .hero img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+  .hero .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(20,38,64,0) 30%, rgba(20,38,64,.88) 100%); }
+  .hero .copy { position: absolute; left: .32in; right: .32in; bottom: .24in; color: #fff; }
+  .hero h1 { font-size: 34pt; font-weight: 800; letter-spacing: -.01em; }
+  .hero p { font-size: 11pt; margin: .08in 0 0; max-width: 5.6in; color: #e8eef8; }
+
+  .intro { margin: .2in .5in 0; display: grid; grid-template-columns: 1fr 2.05in; gap: .25in; align-items: start; }
+  .intro p { font-size: 10pt; }
+  .award { background: var(--mist); border-left: 5px solid var(--gold); border-radius: 0 8px 8px 0; padding: .1in .14in; font-size: 8.6pt; line-height: 1.35; }
+  .award strong { display: block; font-family: var(--display); font-stretch: 88%; font-size: 11pt; color: var(--blue-dark); margin-bottom: 2px; }
+
+  .what { margin: .12in .5in 0; }
+  .what h2 { font-size: 15pt; color: var(--blue-dark); margin-bottom: .09in; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: .1in .22in; }
+  .item h3 { font-size: 10.5pt; color: var(--ink); margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+  .item h3::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--gold); flex: none; }
+  .item p { font-size: 8.7pt; color: var(--ink-soft); margin: 0; line-height: 1.36; }
+
+  .join { margin: .2in .5in 0; background: var(--ink); color: #fff; border-radius: 10px; padding: .2in .26in; display: grid; grid-template-columns: 1.32in 1fr; gap: .26in; align-items: center; }
+  .qr { background: #fff; border-radius: 8px; padding: .09in; text-align: center; }
+  .qr img { width: 100%; display: block; }
+  .qr span { display: block; font: 700 7pt var(--text); color: var(--ink); letter-spacing: .06em; text-transform: uppercase; margin-top: 4px; }
+  .join h2 { font-size: 17pt; color: #fff; margin-bottom: .06in; }
+  .join h2 em { font-style: normal; color: var(--gold); }
+  .join ul { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px .2in; }
+  .join li { font-size: 8.9pt; line-height: 1.35; padding-left: 13px; position: relative; color: #dbe4f2; }
+  .join li::before { content: "›"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+  .join li strong { color: #fff; }
+
+  footer { margin: auto .5in .32in; padding-top: .14in; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1.25fr 1fr 1.1in; gap: .22in; align-items: center; font-size: 8.4pt; line-height: 1.45; }
+  footer .label { font: 700 7pt var(--text); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); display: block; margin-bottom: 2px; }
+  footer a { color: var(--blue); text-decoration: none; }
+  footer strong { color: var(--ink); }
+  .sponsor { text-align: center; }
+  .sponsor img { width: 100%; display: block; margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <img src="../../static/img/logo.webp" alt="Delta Shores Community Association">
+    <div class="tag">A 501(c)(3) nonprofit<br>Neighbors helping neighbors</div>
+  </header>
+
+  <div class="hero">
+    <img src="flyer-hero.jpg" alt="">
+    <div class="shade"></div>
+    <div class="copy">
+      <h1>Welcome to Delta Shores!</h1>
+      <p>Meet your community association: the neighbors who bring Delta Shores together and make sure our voice is heard.</p>
+    </div>
+  </div>
+
+  <section class="intro">
+    <div>
+      <p>The <strong>Delta Shores Community Association</strong> is a grassroots nonprofit formed by residents and local businesses who want a connected, engaged neighborhood. We're not an HOA. Your HOA takes care of maintenance and rules for your subdivision. We focus on everything else that makes a neighborhood feel like home: bringing neighbors together, and working with city leaders on what Delta Shores needs.</p>
+      <p style="margin:0">As Delta Shores grows, with new parks and a school planned, we're working to make sure residents help shape what comes next.</p>
+    </div>
+    <div class="award">
+      <strong>Neighborhood Association of the Year</strong>
+      Recognized by Sacramento City Councilmember Mai Vang, District 8.
+    </div>
+  </section>
+
+  <section class="what">
+    <h2>What we do</h2>
+    <div class="grid">
+      <div class="item"><h3>Community events</h3><p>Block parties, Cinco de Mayo, Halloween, National Night Out and the Delta Shores Festival of Lights.</p></div>
+      <div class="item"><h3>A voice at City Hall</h3><p>We've hosted the Mayor, our Councilmember, our Assemblymember, police and fire leaders to talk about Delta Shores' needs.</p></div>
+      <div class="item"><h3>Community meetings</h3><p>Regular neighborhood meetings, in person and online, with updates on development, parks and safety.</p></div>
+      <div class="item"><h3>Neighborhood Watch</h3><p>Neighbors looking out for each other, sharing information and staying aware.</p></div>
+      <div class="item"><h3>Parks &amp; beautification</h3><p>Surveying residents and advocating for the new Delta Shores park and green spaces.</p></div>
+      <div class="item"><h3>Local business perks</h3><p>Our Business Spotlight features nearby businesses, with exclusive deals for residents.</p></div>
+    </div>
+  </section>
+
+  <section class="join">
+    <div class="qr">
+      <img src="qr-signup.svg" alt="QR code to the Delta Shores Community Association sign-up form">
+      <span>Scan to sign up</span>
+    </div>
+    <div>
+      <h2>Get connected. <em>It's free.</em></h2>
+      <ul>
+        <li><strong>Join our mailing list</strong> for event invites and neighborhood news.</li>
+        <li><strong>Join the community WhatsApp group</strong> for announcements and discussion.</li>
+        <li><strong>Join Neighborhood Watch</strong> and help keep our streets safe.</li>
+        <li><strong>Volunteer</strong> at events, or <strong>become a member</strong> for $25/year.</li>
+      </ul>
+      <p style="margin:.08in 0 0;font-size:8.6pt;color:#dbe4f2">Scan the code or visit <strong style="color:#fff">deltashorescommunity.com/contact</strong></p>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <span class="label">Contact us</span>
+      <strong>deltashorescommunity.com</strong><br>
+      info@deltashorescommunity.com<br>
+      Facebook · Instagram @deltashorescommunity · Nextdoor
+    </div>
+    <div>
+      <span class="label">Board</span>
+      Junior Goris, President &amp; Founder<br>
+      Monserrat Garcia, Vice President<br>
+      Daron Go, Treasurer/Secretary
+    </div>
+    <div class="sponsor">
+      <span class="label">Lead sponsor</span>
+      <img src="../../static/img/site/smud-logo.webp" alt="SMUD">
+    </div>
+  </footer>
+</div>
+</body>
+</html>

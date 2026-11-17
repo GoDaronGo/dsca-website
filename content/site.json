@@ -219,5 +219,80 @@
         "note": "Poke bowls at 8140 Delta Shores Circle South, Suite 130"
       }
     ]
-  }
+  },
+  "civic_leaders": [
+    {
+      "name": "Mai Vang",
+      "role": "Councilmember, Sacramento City Council District 8",
+      "url": "https://maivangsacramento.org/",
+      "email": "district8@cityofsacramento.org",
+      "phone": "(916) 808-7008",
+      "staff": [
+        {
+          "name": "Jaime R. Cervantes",
+          "role": "District Office Director",
+          "email": "jcervantes@cityofsacramento.org"
+        },
+        {
+          "name": "Samantha Lysaythong",
+          "role": "Community events",
+          "email": "slysaythong@cityofsacramento.org"
+        },
+        {
+          "name": "Susan Khang",
+          "role": "Constituent concerns",
+          "email": "skhang@cityofsacramento.org"
+        }
+      ]
+    },
+    {
+      "name": "Kevin McCarty",
+      "role": "Mayor of Sacramento",
+      "url": "https://www.cityofsacramento.gov/mayor-council/mayor",
+      "email": "mayor@cityofsacramento.org",
+      "phone": "(916) 808-5300",
+      "staff": [
+        {
+          "name": "Lisa Nava",
+          "role": "Chief of Staff",
+          "email": "lnava@cityofsacramento.org"
+        }
+      ]
+    },
+    {
+      "name": "Chinua Rhodes",
+      "role": "Trustee, Sacramento City Unified School District Board of Education, Area 5",
+      "url": "https://www.scusd.edu/board-member/chinua-rhodes",
+      "phone": "(916) 643-9314",
+      "phone_note": "SCUSD Board Office"
+    },
+    {
+      "name": "Sacramento Police Department",
+      "role": "Interim Chief of Police Zachary Bales",
+      "url": "https://www.cityofsacramento.gov/police",
+      "staff": [
+        {
+          "name": "Captain Jeffrey Shiraishi",
+          "role": "South Command, Joseph E. Rooney Police Facility, 5303 Franklin Blvd",
+          "phone": "(916) 808-6001"
+        }
+      ]
+    },
+    {
+      "name": "Sacramento Fire Department",
+      "role": "Fire Chief Chris Costamagna",
+      "url": "https://www.cityofsacramento.gov/fire",
+      "staff": [
+        {
+          "name": "Station 7",
+          "role": "6500 Wyndham Dr"
+        },
+        {
+          "name": "Station 16",
+          "role": "7363 24th St"
+        }
+      ],
+      "staff_label": "District 8 fire stations"
+    }
+  ]
 }
