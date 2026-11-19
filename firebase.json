@@ -10,6 +10,7 @@
       {"source": "/store-1-0{,/**}", "destination": "/", "type": 301},
       {"source": "/cart", "destination": "/", "type": 301},
       {"source": "/rsvp", "destination": "/events", "type": 301},
+      {"source": "/blog/save-the-date-delta-shores-festival-of-lights", "destination": "/events/be-the-light-2026", "type": 301},
       {"source": "/block-party-flyer", "destination": "/block-party-fiesta-2025.pdf", "type": 301},
       {"source": "/s/Delta-Shores-ASSOCIATION-BYLAWS-1.pdf", "destination": "/bylaws.pdf", "type": 301}
     ],
